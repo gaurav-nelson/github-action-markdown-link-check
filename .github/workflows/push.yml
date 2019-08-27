@@ -1,0 +1,9 @@
+on: push
+name: New workflow
+jobs:
+  markdown-link-check:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - name: markdown-link-check
+      uses: ./
