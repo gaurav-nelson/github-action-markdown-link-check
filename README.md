@@ -17,7 +17,7 @@ This GitHub action checks all Markdown files in your repository for broken links
        - uses: actions/checkout@master
          with:
            fetch-depth: 1
-       - uses: gaurav-nelson/github-action-markdown-link-check@v0.2.0
+       - uses: gaurav-nelson/github-action-markdown-link-check@0.2.0
    ```
 
 ## Test links
