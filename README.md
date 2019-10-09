@@ -17,11 +17,17 @@ This GitHub action checks all Markdown files in your repository for broken links
        - uses: actions/checkout@master
          with:
            fetch-depth: 1
-       - uses: gaurav-nelson/github-action-markdown-link-check@0.2.0
+       - uses: gaurav-nelson/github-action-markdown-link-check@0.3.0
    ```
+1. To use a [custom configuration](https://github.com/tcort/markdown-link-check#config-file-format)
+   for markdown-link-check, create a JSON configuration file and save it in the
+   root filder as `mlc_config.json`.
 
 ## Test links
 
 www.google.com
 
 [This is a broken link](www.exampleexample.cox)
+
+[This is another broken link](http://ignored-domain.com) but its ignored using a
+configuration file. 
