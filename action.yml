@@ -1,5 +1,9 @@
 name: 'markdown-link-check'
 description: 'Check if all links are valid in markdown files.'
+author: 'Gaurav Nelson'
+branding:
+  icon: 'link'  
+  color: 'green'
 runs:
   using: 'docker'
   image: 'Dockerfile'
