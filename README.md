@@ -17,7 +17,25 @@ This GitHub action checks all Markdown files in your repository for broken links
        - uses: actions/checkout@master
          with:
            fetch-depth: 1
-       - uses: gaurav-nelson/github-action-markdown-link-check@0.4.0
+       - uses: gaurav-nelson/github-action-markdown-link-check@0.5.0
+   ```
+1. Or, to use the quite mode option use the following:
+
+   ```yml
+   name: Check Markdown links
+   
+   on: push
+   
+   jobs:
+     markdown-link-check:
+       runs-on: ubuntu-latest
+       steps:
+       - uses: actions/checkout@master
+         with:
+           fetch-depth: 1
+       - uses: gaurav-nelson/github-action-markdown-link-check@0.5.0
+         with:
+           use-quite-mode: 'yes' 
    ```
 1. To use a [custom configuration](https://github.com/tcort/markdown-link-check#config-file-format)
    for markdown-link-check, create a JSON configuration file and save it in the

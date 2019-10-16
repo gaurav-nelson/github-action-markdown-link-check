@@ -4,6 +4,14 @@ author: 'Gaurav Nelson'
 branding:
   icon: 'link'  
   color: 'green'
+inputs:
+  use-quite-mode:
+    description: 'Use yes to enable markdown-link-check quite mode which only
+    list errors.'
+    required: true
+    default: 'no'
 runs:
   using: 'docker'
   image: 'Dockerfile'
+  args:
+    - ${{ inputs.use-quite-mode }}
