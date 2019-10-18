@@ -8,6 +8,10 @@ YELLOW='\033[0;33m'
 BLUE='\033[0;34m'
 USE_QUITE_MODE_INPUT="$1"
 
+echo $(INPUT_USE-QUITE-MODE)
+echo $(INPUT_USE-VERBOSE-MODE)
+echo $(INPUT_CONFIG-FILE)
+
 npm i -g markdown-link-check
 
 CONFIG_FILE=mlc_config.json

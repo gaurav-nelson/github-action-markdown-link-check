@@ -10,8 +10,18 @@ inputs:
     list errors.'
     required: true
     default: 'no'
+  use-verbose-mode:
+    description: 'Use yes to enable markdown-link-check verbose mode which lists
+    additional details.'
+    required: true
+    default: 'no'
+  config-file:
+    description: 'Provide full path for markdown-link-check JSON configuration file.'
+    default: 'mlc_config.json'
 runs:
   using: 'docker'
   image: 'Dockerfile'
   args:
     - ${{ inputs.use-quite-mode }}
+    - ${{ inputs.use-verbose-mode }}
+    - ${{ inputs.config-file }}

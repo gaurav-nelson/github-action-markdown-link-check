@@ -9,3 +9,5 @@ jobs:
       uses: ./
       with:
         use-quite-mode: 'yes'
+        use-verbose-mode: 'yes'
+        config-file: 'mlc_config.json'
