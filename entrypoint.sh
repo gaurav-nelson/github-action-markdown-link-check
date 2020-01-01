@@ -9,14 +9,14 @@ BLUE='\033[0;34m'
 
 npm i -g markdown-link-check
 
-CONFIG_FILE=mlc_config.json
+CONFIG_FILE="${INPUT_CONFIG_FILE:-mlc_config.json}"
 
 echo -e "${YELLOW}=========================> MARKDOWN LINK CHECK <=========================${NC}"
 
 if [ -f "$CONFIG_FILE" ]; then
     echo -e "${BLUE}Using markdown-link-check configuration file: ${YELLOW}$CONFIG_FILE${NC}"
     find . -name \*.md -not -path "./node_modules/*" -exec markdown-link-check {} --config "$CONFIG_FILE" \; 2> error.txt
-else 
+else
     echo -e "${BLUE}Cannot find ${YELLOW}$CONFIG_FILE${NC}"
     echo -e "${YELLOW}NOTE: See https://github.com/tcort/markdown-link-check#config-file-format to know more about"
     echo -e "customizing markdown-link-check by using a configuration file.${NC}"

@@ -7,9 +7,9 @@ This GitHub action checks all Markdown files in your repository for broken links
 
    ```yml
    name: Check Markdown links
-   
+
    on: push
-   
+
    jobs:
      markdown-link-check:
        runs-on: ubuntu-latest
@@ -18,10 +18,12 @@ This GitHub action checks all Markdown files in your repository for broken links
          with:
            fetch-depth: 1
        - uses: gaurav-nelson/github-action-markdown-link-check@0.4.0
+         with:
+           config_file: mlc_config.json  # optional
    ```
 1. To use a [custom configuration](https://github.com/tcort/markdown-link-check#config-file-format)
    for markdown-link-check, create a JSON configuration file and save it in the
-   root folder as `mlc_config.json`.
+   root folder as `mlc_config.json`. You can also use the `config_file` variable.
 
 ## Test links
 
@@ -30,4 +32,4 @@ www.google.com
 [This is a broken link](www.exampleexample.cox)
 
 [This is another broken link](http://ignored-domain.com) but its ignored using a
-configuration file. 
+configuration file.
