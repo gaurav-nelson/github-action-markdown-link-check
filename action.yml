@@ -4,6 +4,25 @@ author: 'Gaurav Nelson'
 branding:
   icon: 'link'  
   color: 'green'
+inputs:
+  use-quite-mode:
+    description: 'Use yes to enable markdown-link-check quite mode which only
+    list errors.'
+    required: true
+    default: 'no'
+  use-verbose-mode:
+    description: 'Use yes to enable markdown-link-check verbose mode which lists
+    additional details.'
+    required: true
+    default: 'no'
+  config-file:
+    description: 'Specify path to a markdown-link-check JSON configuration file.'
+    required: true
+    default: 'mlc_config.json'
 runs:
   using: 'docker'
   image: 'Dockerfile'
+  args:
+    - ${{ inputs.use-quite-mode }}
+    - ${{ inputs.use-verbose-mode }}
+    - ${{ inputs.config-file }}

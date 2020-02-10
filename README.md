@@ -23,11 +23,27 @@ This GitHub action checks all Markdown files in your repository for broken links
    for markdown-link-check, create a JSON configuration file and save it in the
    root folder as `mlc_config.json`.
 
-## Test links
+## Test internal and external links
 
 www.google.com
 
-[This is a broken link](www.exampleexample.cox)
+[This is a broken link](https://www.exampleexample.cox)
 
 [This is another broken link](http://ignored-domain.com) but its ignored using a
 configuration file. 
+
+### Alpha
+
+This [exists](#alpha).
+This [one does not](#does-not).
+References and definitions are [checked][alpha] [too][charlie].
+
+### Bravo
+
+Headings in `readme.md` are [not checked](readme.md#bravo).
+But [missing files are reported](missing-example.js).
+
+[alpha]: #alpha
+[charlie]: #charlie
+
+External file: [Charlie](./README2.md/#charlie)
