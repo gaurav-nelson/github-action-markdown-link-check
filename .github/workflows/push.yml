@@ -7,3 +7,5 @@ jobs:
     - uses: actions/checkout@master
     - name: markdown-link-check
       uses: ./
+      with:
+        use-quiet-mode: 'yes'
