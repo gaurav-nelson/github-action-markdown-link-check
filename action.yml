@@ -5,8 +5,8 @@ branding:
   icon: 'link'  
   color: 'green'
 inputs:
-  use-quite-mode:
-    description: 'Use yes to enable markdown-link-check quite mode which only
+  use-quiet-mode:
+    description: 'Use yes to enable markdown-link-check quiet mode which only
     list errors.'
     required: true
     default: 'no'
@@ -19,10 +19,15 @@ inputs:
     description: 'Specify path to a markdown-link-check JSON configuration file.'
     required: true
     default: 'mlc_config.json'
+  folder-path:
+    description: 'Specify path to a custom folder where your markdown files are located.'
+    required: true
+    default: '.'
 runs:
   using: 'docker'
   image: 'Dockerfile'
   args:
-    - ${{ inputs.use-quite-mode }}
+    - ${{ inputs.use-quiet-mode }}
     - ${{ inputs.use-verbose-mode }}
     - ${{ inputs.config-file }}
+    - ${{ inputs.folder-path }}
