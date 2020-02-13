@@ -15,33 +15,13 @@ This GitHub action checks all Markdown files in your repository for broken links
        runs-on: ubuntu-latest
        steps:
        - uses: actions/checkout@master
-         with:
-           fetch-depth: 1
-       - uses: gaurav-nelson/github-action-markdown-link-check@0.5.0
-   ```
-1. Or you can use the action with [variables](#available-variables) as follows:
-
-   ```yml
-   name: Check Markdown links
-   
-   on: push
-   
-   jobs:
-     markdown-link-check:
-       runs-on: ubuntu-latest
-       steps:
-       - uses: actions/checkout@master
-         with:
-           fetch-depth: 1
-       - uses: gaurav-nelson/github-action-markdown-link-check@0.5.0
-         with:
-           use-quiet-mode: 'yes'
-           use-verbose-mode: 'yes'
-           config-file: 'mlc_config.json'
-           folder-path: 'docs/markdown_files'
+       - uses: gaurav-nelson/github-action-markdown-link-check@0.6.0
    ```
 
-### Available variables
+## Configuration
+
+### Custom variables
+You cancustomize the action by using the following variables:
  
 - `use-quiet-mode`: Specify `yes` to only show errors in output.
 - `use-verbose-mode`: Specify `yes` to show detailed HTTP status for checked links.
@@ -53,27 +33,55 @@ This GitHub action checks all Markdown files in your repository for broken links
   checks for all markdown files in your repository. Use this option to limit
   checks to only specific folders.
 
-## Test internal and external links
+#### Sample workflow with variables
 
-www.google.com
+```yml
+name: Check Markdown links
 
-[This is a broken link](https://www.exampleexample.cox)
+on: push
 
-[This is another broken link](http://ignored-domain.com) but its ignored using a
-configuration file. 
+jobs:
+  markdown-link-check:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - uses: gaurav-nelson/github-action-markdown-link-check@0.6.0
+      with:
+        use-quiet-mode: 'yes'
+        use-verbose-mode: 'yes'
+        config-file: 'mlc_config.json'
+        folder-path: 'docs/markdown_files'
+```
 
-### Alpha
+### Scheduled runs
+In addition to checking links on every push, or pull requests, its also a good
+hygine to check for broken links regularly as well. See
+[Workflow syntax for GitHub Actions - on.schedule](https://help.github.com/en/actions/reference/workflow-syntax-for-github-actions#onschedule)
+for more details.
 
-This [exists](#alpha).
-This [one does not](#does-not).
-References and definitions are [checked][alpha] [too][charlie].
+#### Sample workflow with scheduled job
 
-### Bravo
+```yml
+name: Check Markdown links
 
-Headings in `readme.md` are [not checked](readme.md#bravo).
-But [missing files are reported](missing-example.js).
+on: 
+on: 
+  push:
+    branches:
+    - master
+  schedule:
+  # Run everyday at 9:00 AM (See https://pubs.opengroup.org/onlinepubs/9699919799/utilities/crontab.html#tag_20_25_07)
+  - cron: "0 9 * * *"
 
-[alpha]: #alpha
-[charlie]: #charlie
-
-External file: [Charlie](./README2.md/#charlie)
+jobs:
+  markdown-link-check:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - uses: gaurav-nelson/github-action-markdown-link-check@0.6.0
+      with:
+        use-quiet-mode: 'yes'
+        use-verbose-mode: 'yes'
+        config-file: 'mlc_config.json'
+        folder-path: 'docs/markdown_files'
+```
