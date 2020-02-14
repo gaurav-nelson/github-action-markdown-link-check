@@ -20,6 +20,10 @@ This GitHub action checks all Markdown files in your repository for broken links
 
 ## Configuration
 
+- [Custom variables](#custom-variables)
+- [Scheduled runs](#scheduled-runs)
+- [Disable check for some links](#disable-check-for-some-links)
+
 ### Custom variables
 You cancustomize the action by using the following variables:
  
@@ -85,3 +89,21 @@ jobs:
         config-file: 'mlc_config.json'
         folder-path: 'docs/markdown_files'
 ```
+
+### Disable check for some links
+You can include the following HTML comments into your markdown files to disable
+checking for certain links in a markdown document.
+
+1. `<!-- markdown-link-check-disable -->` and `<!-- markdown-link-check-enable-->`: Use these to disable links for all links appearing between these
+    comments.
+   - Example:
+     ```md
+     <!-- markdown-link-check-disable -->
+     ## Section
+     
+     Disbale link checking in this section. Ignore this [Bad Link](https://exampleexample.cox)
+     <!-- markdown-link-check-enable -->
+     ```
+2. `<!-- markdown-link-check-disable-next-line -->` Use this comment to disable link checking for the next line.
+3. `<!-- markdown-link-check-disable-line -->` Use this comment to disable link
+   checking for the current line.
