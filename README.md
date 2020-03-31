@@ -69,7 +69,6 @@ for more details.
 name: Check Markdown links
 
 on: 
-on: 
   push:
     branches:
     - master
