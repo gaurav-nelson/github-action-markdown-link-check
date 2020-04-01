@@ -36,6 +36,9 @@ You cancustomize the action by using the following variables:
 - `folder-path`: By default the `github-action-markdown-link-check` action
   checks for all markdown files in your repository. Use this option to limit
   checks to only specific folders.
+- `max-depth`: Specify how many levels deep you want to check in the directory
+  structure. By default this is not set, using e.g. `1` will limit to
+  top-level directory only or `folder-path` only, if set.
 
 #### Sample workflow with variables
 
@@ -55,6 +58,7 @@ jobs:
         use-verbose-mode: 'yes'
         config-file: 'mlc_config.json'
         folder-path: 'docs/markdown_files'
+        max-depth: 2
 ```
 
 ### Scheduled runs

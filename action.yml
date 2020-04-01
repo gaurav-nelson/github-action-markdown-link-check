@@ -23,6 +23,10 @@ inputs:
     description: 'Specify path to a custom folder where your markdown files are located.'
     required: true
     default: '.'
+  max-depth:
+    description: 'Specify a max-depth of directories you want to search for markdown files.'
+    required: true
+    default: '-1'
 runs:
   using: 'docker'
   image: 'Dockerfile'
@@ -31,3 +35,4 @@ runs:
     - ${{ inputs.use-verbose-mode }}
     - ${{ inputs.config-file }}
     - ${{ inputs.folder-path }}
+    - ${{ inputs.max-depth }}
