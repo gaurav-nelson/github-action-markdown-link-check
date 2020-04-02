@@ -1,5 +1,11 @@
-on: push
-name: New workflow
+on:
+  push:
+    branches:
+    - master
+  pull_request:
+    branches:
+    - master
+name: Link Check
 jobs:
   markdown-link-check:
     runs-on: ubuntu-latest
