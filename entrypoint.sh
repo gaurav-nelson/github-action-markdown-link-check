@@ -23,11 +23,6 @@ echo -e "${BLUE}MAX_DEPTH: $5${NC}"
 FIND_CALL="find ${FOLDER_PATH} -name \*.md -not -path './node_modules/*' -exec markdown-link-check {}"
 
 if [ -f "$CONFIG_FILE" ]; then
-   if [ "$USE_QUIET_MODE" = "yes" ]; then
-      if [ "$USE_VERBOSE_MODE" = "yes" ]; then
-         echo -e "${BLUE}I found config file ${NC}"
-      fi
-   fi
    echo -e "${BLUE}Using markdown-link-check configuration file: ${YELLOW}$CONFIG_FILE${NC}"
    FIND_CALL+=" --config ${CONFIG_FILE}"
 else
