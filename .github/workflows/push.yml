@@ -10,3 +10,6 @@ jobs:
       with:
         use-quiet-mode: 'yes'
         folder-path: 'md'
+    - name: shellcheck
+      uses: ludeeus/action-shellcheck@0.1.0
+
