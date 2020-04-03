@@ -20,32 +20,35 @@ echo -e "${BLUE}USE_VERBOSE_MODE: $2${NC}"
 echo -e "${BLUE}FOLDER_PATH: $4${NC}"
 echo -e "${BLUE}MAX_DEPTH: $5${NC}"
 
-FIND_CALL="find ${FOLDER_PATH} -name \*.md -not -path './node_modules/*' -exec markdown-link-check {}"
+declare -a FIND_CALL
+
+if [ "$5" -ne -1 ]; then
+   FIND_CALL=('find' "${FOLDER_PATH}" '-name' '*.md' '-not' '-path' './node_modules/*' '-maxdepth' "${MAX_DEPTH}" '-exec' 'markdown-link-check' '{}')
+else
+   FIND_CALL=('find' "${FOLDER_PATH}" '-name' '*.md' '-not' '-path' './node_modules/*' '-exec' 'markdown-link-check' '{}')
+fi
 
 if [ -f "$CONFIG_FILE" ]; then
    echo -e "${BLUE}Using markdown-link-check configuration file: ${YELLOW}$CONFIG_FILE${NC}"
-   FIND_CALL+=" --config ${CONFIG_FILE}"
+   FIND_CALL+=('--config' "${CONFIG_FILE}")
 else
    echo -e "${BLUE}Cannot find ${YELLOW}$CONFIG_FILE${NC}"
    echo -e "${YELLOW}NOTE: See https://github.com/tcort/markdown-link-check#config-file-format to know more about"
    echo -e "customizing markdown-link-check by using a configuration file.${NC}"
 fi
-if [ "$5" -ne -1 ]; then
-   FIND_CALL+=" --maxdepth ${MAX_DEPTH}"
-fi
 
 if [ "$USE_QUIET_MODE" = "yes" ]; then
-   FIND_CALL+=" -q"
+   FIND_CALL+=('-q')
 fi
 
 if [ "$USE_VERBOSE_MODE" = "yes" ]; then
-   FIND_CALL+=" -v"
+   FIND_CALL+=('-v')
 fi
 
-FIND_CALL+=" \; &>> error.txt"
+FIND_CALL+=(';')
 
 set -x
-eval "$FIND_CALL"
+"${FIND_CALL[@]}" &>> error.txt
 set +x
 
 if [ -e error.txt ] ; then
