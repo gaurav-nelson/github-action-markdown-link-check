@@ -23,22 +23,20 @@ This GitHub action checks all Markdown files in your repository for broken links
 - [Custom variables](#custom-variables)
 - [Scheduled runs](#scheduled-runs)
 - [Disable check for some links](#disable-check-for-some-links)
+- [Check only modified files in a pull request](#check-only-modified-files-in-a-pull-request)
 
 ### Custom variables
-You cancustomize the action by using the following variables:
- 
-- `use-quiet-mode`: Specify `yes` to only show errors in output.
-- `use-verbose-mode`: Specify `yes` to show detailed HTTP status for checked links.
-- `config-file`: Specify a [custom configuration
-  file](https://github.com/tcort/markdown-link-check#config-file-format) for
-  markdown-link-check. You can use it to remove false-positives by specifying
-  replacement patterns and ignore patterns.
-- `folder-path`: By default the `github-action-markdown-link-check` action
-  checks for all markdown files in your repository. Use this option to limit
-  checks to only specific folders.
-- `max-depth`: Specify how many levels deep you want to check in the directory
-  structure. By default this is not set, using e.g. `1` will limit to
-  top-level directory only or `folder-path` only, if set.
+You customize the action by using the following variables:
+
+| Variable | Description | Default value |
+|:----------|:--------------|:-----------|
+|`use-quiet-mode`| Specify `yes` to only show errors in output.| `no`|
+|`use-verbose-mode`|Specify `yes` to show detailed HTTP status for checked links. |`no` |
+|`config-file`|Specify a [custom configuration file](https://github.com/tcort/markdown-link-check#config-file-format) for markdown-link-check. You can use it to remove false-positives by specifying replacement patterns and ignore patterns.|`mlc_config.json`|
+|`folder-path` |By default the `github-action-markdown-link-check` action checks for all markdown files in your repository. Use this option to limit checks to only specific folders. |`.` |
+|`max-depth` |Specify how many levels deep you want to check in the directory structure. The default value is `-1` which means check all levels.|`-1` |
+|`check-modified-files-only` |Use this variable to only check modified markdown files instead of checking all markdown files. The action uses `git` to find modified markdown files. Only use this variable when you run the action to check pull requests.|`no`|
+|`base-branch`|Use this variable to specify the branch to compare when finding modified markdown files. |`master`|
 
 #### Sample workflow with variables
 
@@ -110,3 +108,33 @@ checking for certain links in a markdown document.
 2. `<!-- markdown-link-check-disable-next-line -->` Use this comment to disable link checking for the next line.
 3. `<!-- markdown-link-check-disable-line -->` Use this comment to disable link
    checking for the current line.
+
+### Check only modified files in a pull request
+
+Use the following workflow to only check links in modified markdown files in a
+pull request. 
+
+When
+you use this variable, the action finds modififed files between two commits:
+- latest commit in you PR
+- latest commit in the `master` branch. If you are suing a different branch to
+  merge PRs, specify the branch using `base-branch`.
+
+> **NOTE**: We can also use GitHub API to get all modified files in a PR, but that
+> would require tokens and stuff, create an issue or PR if you need that.
+
+```yml
+on: [pull_request]
+name: Check links for modified files
+jobs:
+  markdown-link-check:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - uses: gaurav-nelson/github-action-markdown-link-check@0.6.0
+      with:
+        use-quiet-mode: 'yes'
+        use-verbose-mode: 'yes'
+        check-modified-files-only: 'yes'
+
+```
