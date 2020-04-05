@@ -27,6 +27,16 @@ inputs:
     description: 'Specify a max-depth of directories you want to search for markdown files.'
     required: true
     default: '-1'
+  check-modified-files-only:
+    description: 'Use yes to only check for modified markdown files instead of checking all markdown files.'
+    required: true
+    default: 'no'
+  base-branch:
+    description: 'Use this to specify the base branch against which the action
+    finds the modififed files.'
+    required: true
+    default: 'master'
+
 runs:
   using: 'docker'
   image: 'Dockerfile'
@@ -36,3 +46,5 @@ runs:
     - ${{ inputs.config-file }}
     - ${{ inputs.folder-path }}
     - ${{ inputs.max-depth }}
+    - ${{ inputs.check-modified-files-only }}
+    - ${{ inputs.base-branch }}
