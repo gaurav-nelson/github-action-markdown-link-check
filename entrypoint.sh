@@ -29,7 +29,8 @@ check_errors () {
  if [ -e error.txt ] ; then
    if grep -q "ERROR:" error.txt; then
      echo -e "${YELLOW}=========================> MARKDOWN LINK CHECK <=========================${NC}"
-     cat error.txt
+     # cat error.txt
+     grep --color -E ".*FILE$|.*ERROR$|$" error.txt
      printf "\n"
      echo -e "${YELLOW}=========================================================================${NC}"
      exit 113

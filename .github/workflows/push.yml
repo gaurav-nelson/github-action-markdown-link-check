@@ -10,7 +10,6 @@ jobs:
       with:
         use-quiet-mode: 'yes'
         folder-path: 'md'
-        check-modified-files-only: 'yes'
   shellcheck:
     runs-on: [ubuntu-latest]
     steps:
