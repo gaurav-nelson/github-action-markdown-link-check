@@ -156,3 +156,14 @@ GitHub Action - Markdown link check follows the [GitHub recommended versioning s
    ```yml
    - uses: gaurav-nelson/github-action-markdown-link-check@44a942b2f7ed0dc101d556f281e906fb79f1f478
    ```
+
+## Real-life usage samples
+
+Following is a list of some of the repositories which are using GitHub Action -
+Markdown link check.
+
+| Repository| Stars | Workflow file |
+|:----------|:--------------|:------------|
+|https://github.com/fluxcd/flux|[![GitHub stars](https://img.shields.io/github/stars/fluxcd/flux?style=social)](https://github.com/fluxcd/flux/stargazers)| https://github.com/fluxcd/flux/blob/master/.github/workflows/docs.yaml|
+|https://github.com/tendermint/tendermint|[![GitHub stars](https://img.shields.io/github/stars/tendermint/tendermint?style=social)](https://github.com/tendermint/tendermint/stargazers)| https://github.com/tendermint/tendermint/blob/master/.github/workflows/linkchecker.yml|
+|https://github.com/stoplightio/prism|[![GitHub stars](https://img.shields.io/github/stars/stoplightio/prism?style=social)](https://github.com/stoplightio/prism/stargazers)| https://github.com/stoplightio/prism/blob/master/.github/workflows/markdown-links.yml|
