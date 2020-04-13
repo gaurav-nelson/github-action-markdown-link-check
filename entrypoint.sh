@@ -7,7 +7,7 @@ GREEN='\033[0;32m'
 YELLOW='\033[0;33m'
 BLUE='\033[0;34m'
 
-npm i -g markdown-link-check
+npm i -g markdown-link-check@3.8.1
 
 declare -a FIND_CALL
 
