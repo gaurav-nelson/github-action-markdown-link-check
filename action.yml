@@ -36,6 +36,10 @@ inputs:
     finds the modififed files.'
     required: true
     default: 'master'
+  file-extension:
+    description: 'Use this to specify the file extension of Markdown files.'
+    required: true
+    default: '.md'
 
 runs:
   using: 'docker'
@@ -48,3 +52,4 @@ runs:
     - ${{ inputs.max-depth }}
     - ${{ inputs.check-modified-files-only }}
     - ${{ inputs.base-branch }}
+    - ${{ inputs.file-extension }}
