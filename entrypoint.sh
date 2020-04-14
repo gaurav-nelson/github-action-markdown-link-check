@@ -7,7 +7,7 @@ GREEN='\033[0;32m'
 YELLOW='\033[0;33m'
 BLUE='\033[0;34m'
 
-npm i -g markdown-link-check
+npm i -g markdown-link-check@3.8.1
 
 declare -a FIND_CALL
 
@@ -26,23 +26,54 @@ echo -e "${BLUE}MAX_DEPTH: $5${NC}"
 echo -e "${BLUE}CHECK_MODIFIED_FILES: $6${NC}"
 
 check_errors () {
- if [ -e error.txt ] ; then
-   if grep -q "ERROR:" error.txt; then
-     echo -e "${YELLOW}=========================> MARKDOWN LINK CHECK <=========================${NC}"
-     cat error.txt
-     printf "\n"
-     echo -e "${YELLOW}=========================================================================${NC}"
-     exit 113
+   if [ -e error.txt ] ; then
+      if [ "$USE_QUIET_MODE" = "yes" ]; then
+         # Even with -q option markdown-link-check shows all processed files
+         # the following logic cleans the output to only show files with errors.
+         touch output.txt
+         PREVIOUS_LINE=""
+         ERROR_FILE="error.txt"
+         while IFS= read -r LINE
+         do
+            if [[ $LINE = *"FILE"* ]]; then
+               PREVIOUS_LINE=$LINE
+               if [[ $(tail -1 output.txt) != *FILE* ]]; then
+                  echo -e "\n" >> output.txt
+                  echo "$LINE" >> output.txt
+               fi
+            elif [[ $LINE = *"[✖]"* ]] && [[ $PREVIOUS_LINE = *"FILE"* ]]; then
+               echo "$LINE" >> output.txt
+            else 
+               PREVIOUS_LINE=""
+            fi
+
+         done < "$ERROR_FILE"
+      fi
+   
+      if grep -q "ERROR:" error.txt; then
+         echo -e "${YELLOW}=========================> MARKDOWN LINK CHECK <=========================${NC}"
+         if [ "$USE_QUIET_MODE" = "yes" ]; then
+            if [[ $(tail -1 output.txt) = *FILE* ]]; then
+               sed '$d' output.txt
+            else
+               cat output.txt
+            fi
+         else
+            cat error.txt
+         fi
+         printf "\n"
+         echo -e "${YELLOW}=========================================================================${NC}"
+         exit 113
+      else
+        echo -e "${YELLOW}=========================> MARKDOWN LINK CHECK <=========================${NC}"
+        printf "\n"
+        echo -e "${GREEN}[✔] All links are good!${NC}"
+        printf "\n"
+        echo -e "${YELLOW}=========================================================================${NC}"
+      fi
    else
-     echo -e "${YELLOW}=========================> MARKDOWN LINK CHECK <=========================${NC}"
-     printf "\n"
-     echo -e "${GREEN}[✔] All links are good!${NC}"
-     printf "\n"
-     echo -e "${YELLOW}=========================================================================${NC}"
+      echo -e "${GREEN}All good!${NC}"
    fi
- else
-   echo -e "${GREEN}All good!${NC}"
- fi
 }
 
 if [ "$CHECK_MODIFIED_FILES" = "yes" ]; then
