@@ -18,12 +18,14 @@ FOLDER_PATH="$4"
 MAX_DEPTH="$5"
 CHECK_MODIFIED_FILES="$6"
 BASE_BRANCH="$7"
+FILE_EXTENSION="$8"
 
 echo -e "${BLUE}USE_QUIET_MODE: $1${NC}"
 echo -e "${BLUE}USE_VERBOSE_MODE: $2${NC}"
 echo -e "${BLUE}FOLDER_PATH: $4${NC}"
 echo -e "${BLUE}MAX_DEPTH: $5${NC}"
 echo -e "${BLUE}CHECK_MODIFIED_FILES: $6${NC}"
+echo -e "${BLUE}FILE_EXTENSION: $8${NC}"
 
 check_errors () {
    if [ -e error.txt ] ; then
@@ -119,9 +121,9 @@ if [ "$CHECK_MODIFIED_FILES" = "yes" ]; then
 else
 
    if [ "$5" -ne -1 ]; then
-      FIND_CALL=('find' "${FOLDER_PATH}" '-name' '*.md' '-not' '-path' './node_modules/*' '-maxdepth' "${MAX_DEPTH}" '-exec' 'markdown-link-check' '{}')
+      FIND_CALL=('find' "${FOLDER_PATH}" '-name' '*'"${FILE_EXTENSION}" '-not' '-path' './node_modules/*' '-maxdepth' "${MAX_DEPTH}" '-exec' 'markdown-link-check' '{}')
    else
-      FIND_CALL=('find' "${FOLDER_PATH}" '-name' '*.md' '-not' '-path' './node_modules/*' '-exec' 'markdown-link-check' '{}')
+      FIND_CALL=('find' "${FOLDER_PATH}" '-name' '*'"${FILE_EXTENSION}" '-not' '-path' './node_modules/*' '-exec' 'markdown-link-check' '{}')
    fi
 
    if [ -f "$CONFIG_FILE" ]; then

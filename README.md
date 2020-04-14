@@ -39,6 +39,7 @@ You customize the action by using the following variables:
 |`max-depth` |Specify how many levels deep you want to check in the directory structure. The default value is `-1` which means check all levels.|`-1` |
 |`check-modified-files-only` |Use this variable to only check modified markdown files instead of checking all markdown files. The action uses `git` to find modified markdown files. Only use this variable when you run the action to check pull requests.|`no`|
 |`base-branch`|Use this variable to specify the branch to compare when finding modified markdown files. |`master`|
+|`file-extension`|By default the `github-action-markdown-link-check` action checks files in your repository with the `.md` extension. Use this option to specify a different file extension such as `.markdown` or `.mdx`.|`.md`|
 
 #### Sample workflow with variables
 
