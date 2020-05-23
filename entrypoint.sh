@@ -18,7 +18,12 @@ FOLDER_PATH="$4"
 MAX_DEPTH="$5"
 CHECK_MODIFIED_FILES="$6"
 BASE_BRANCH="$7"
-FILE_EXTENSION="$8"
+if [ -z "$8" ]; then
+   FILE_EXTENSION=".md"
+else
+   FILE_EXTENSION="$8"
+fi
+EXCLUDE="$9"
 
 echo -e "${BLUE}USE_QUIET_MODE: $1${NC}"
 echo -e "${BLUE}USE_VERBOSE_MODE: $2${NC}"
@@ -28,54 +33,23 @@ echo -e "${BLUE}CHECK_MODIFIED_FILES: $6${NC}"
 echo -e "${BLUE}FILE_EXTENSION: $8${NC}"
 
 check_errors () {
-   if [ -e error.txt ] ; then
-      if [ "$USE_QUIET_MODE" = "yes" ]; then
-         # Even with -q option markdown-link-check shows all processed files
-         # the following logic cleans the output to only show files with errors.
-         touch output.txt
-         PREVIOUS_LINE=""
-         ERROR_FILE="error.txt"
-         while IFS= read -r LINE
-         do
-            if [[ $LINE = *"FILE"* ]]; then
-               PREVIOUS_LINE=$LINE
-               if [[ $(tail -1 output.txt) != *FILE* ]]; then
-                  echo -e "\n" >> output.txt
-                  echo "$LINE" >> output.txt
-               fi
-            elif [[ $LINE = *"[✖]"* ]] && [[ $PREVIOUS_LINE = *"FILE"* ]]; then
-               echo "$LINE" >> output.txt
-            else 
-               PREVIOUS_LINE=""
-            fi
-
-         done < "$ERROR_FILE"
-      fi
-   
-      if grep -q "ERROR:" error.txt; then
-         echo -e "${YELLOW}=========================> MARKDOWN LINK CHECK <=========================${NC}"
-         if [ "$USE_QUIET_MODE" = "yes" ]; then
-            if [[ $(tail -1 output.txt) = *FILE* ]]; then
-               sed '$d' output.txt
-            else
-               cat output.txt
-            fi
-         else
-            cat error.txt
-         fi
-         printf "\n"
-         echo -e "${YELLOW}=========================================================================${NC}"
-         exit 113
-      else
-        echo -e "${YELLOW}=========================> MARKDOWN LINK CHECK <=========================${NC}"
-        printf "\n"
-        echo -e "${GREEN}[✔] All links are good!${NC}"
-        printf "\n"
-        echo -e "${YELLOW}=========================================================================${NC}"
-      fi
+ if [ -e error.txt ] ; then
+   if grep -q "ERROR:" error.txt; then
+     echo -e "${YELLOW}=========================> MARKDOWN LINK CHECK <=========================${NC}"
+     cat error.txt
+     printf "\n"
+     echo -e "${YELLOW}=========================================================================${NC}"
+     exit 113
    else
-      echo -e "${GREEN}All good!${NC}"
+     echo -e "${YELLOW}=========================> MARKDOWN LINK CHECK <=========================${NC}"
+     printf "\n"
+     echo -e "${GREEN}[✔] All links are good!${NC}"
+     printf "\n"
+     echo -e "${YELLOW}=========================================================================${NC}"
    fi
+ else
+   echo -e "${GREEN}All good!${NC}"
+ fi
 }
 
 if [ "$CHECK_MODIFIED_FILES" = "yes" ]; then
@@ -115,15 +89,23 @@ if [ "$CHECK_MODIFIED_FILES" = "yes" ]; then
             unset 'FIND_CALL[${#FIND_CALL[@]}-1]'
          fi
       done
-   
+
    check_errors
 
 else
+   # Needed for files/directories containing "spaces" - in this case "one two"
+   # directory will be handled properly
+   IFS=$'\n'
+
+   FIND_EXCLUDE=('-not' '-path' './node_modules/*')
+   for i in ${EXCLUDE[*]}; do
+     FIND_EXCLUDE+=('-not' '-path' "${i}")
+   done
 
    if [ "$5" -ne -1 ]; then
-      FIND_CALL=('find' "${FOLDER_PATH}" '-name' '*'"${FILE_EXTENSION}" '-not' '-path' './node_modules/*' '-maxdepth' "${MAX_DEPTH}" '-exec' 'markdown-link-check' '{}')
+      FIND_CALL=('find' "${FOLDER_PATH}" '-name' '*'"${FILE_EXTENSION}" "${FIND_EXCLUDE[@]}" '-maxdepth' "${MAX_DEPTH}" '-exec' 'markdown-link-check' '{}')
    else
-      FIND_CALL=('find' "${FOLDER_PATH}" '-name' '*'"${FILE_EXTENSION}" '-not' '-path' './node_modules/*' '-exec' 'markdown-link-check' '{}')
+      FIND_CALL=('find' "${FOLDER_PATH}" '-name' '*'"${FILE_EXTENSION}" "${FIND_EXCLUDE[@]}" '-exec' 'markdown-link-check' '{}')
    fi
 
    if [ -f "$CONFIG_FILE" ]; then

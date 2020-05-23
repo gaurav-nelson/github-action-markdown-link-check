@@ -9,9 +9,9 @@ This GitHub action checks all Markdown files in your repository for broken links
 
    ```yml
    name: Check Markdown links
-   
+
    on: push
-   
+
    jobs:
      markdown-link-check:
        runs-on: ubuntu-latest
@@ -40,6 +40,7 @@ You customize the action by using the following variables:
 |`check-modified-files-only` |Use this variable to only check modified markdown files instead of checking all markdown files. The action uses `git` to find modified markdown files. Only use this variable when you run the action to check pull requests.|`no`|
 |`base-branch`|Use this variable to specify the branch to compare when finding modified markdown files. |`master`|
 |`file-extension`|By default the `github-action-markdown-link-check` action checks files in your repository with the `.md` extension. Use this option to specify a different file extension such as `.markdown` or `.mdx`.|`.md`|
+|`exclude`|Use this variable to specify the files/directories which should be excluded form checking the links|`./node_modules/*`|
 
 #### Sample workflow with variables
 
@@ -60,6 +61,7 @@ jobs:
         config-file: 'mlc_config.json'
         folder-path: 'docs/markdown_files'
         max-depth: 2
+        exclude: CHANGELOG.md
 ```
 
 ### Scheduled runs
@@ -73,7 +75,7 @@ for more details.
 ```yml
 name: Check Markdown links
 
-on: 
+on:
   push:
     branches:
     - master
@@ -92,6 +94,11 @@ jobs:
         use-verbose-mode: 'yes'
         config-file: 'mlc_config.json'
         folder-path: 'docs/markdown_files'
+        # Exclude only works when check-modified-files-only is not enabled
+        exclude: |
+          ./docs/markdown_files/node_modules/*
+          ./docs/markdown_files/CHANGELOG.md
+          */mydocs/*
 ```
 
 ### Disable check for some links
@@ -104,7 +111,7 @@ checking for certain links in a markdown document.
      ```md
      <!-- markdown-link-check-disable -->
      ## Section
-     
+
      Disbale link checking in this section. Ignore this [Bad Link](https://exampleexample.cox)
      <!-- markdown-link-check-enable -->
      ```
@@ -115,7 +122,7 @@ checking for certain links in a markdown document.
 ### Check only modified files in a pull request
 
 Use the following workflow to only check links in modified markdown files in a
-pull request. 
+pull request.
 
 When
 you use this variable, the action finds modififed files between two commits:
@@ -143,7 +150,7 @@ jobs:
 ```
 
 ## Versioning
-GitHub Action - Markdown link check follows the [GitHub recommended versioning strategy](https://github.com/actions/toolkit/blob/master/docs/action-versioning.md). 
+GitHub Action - Markdown link check follows the [GitHub recommended versioning strategy](https://github.com/actions/toolkit/blob/master/docs/action-versioning.md).
 
 1. To use a specific released version of the action ([Releases](https://github.com/gaurav-nelson/github-action-markdown-link-check/releases)):
    ```yml
