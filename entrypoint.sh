@@ -18,7 +18,11 @@ FOLDER_PATH="$4"
 MAX_DEPTH="$5"
 CHECK_MODIFIED_FILES="$6"
 BASE_BRANCH="$7"
-FILE_EXTENSION="$8"
+if [ $8 -eq 0 ]; then
+   FILE_EXTENSION=".md"
+else
+   FILE_EXTENSION="$8"
+fi
 
 echo -e "${BLUE}USE_QUIET_MODE: $1${NC}"
 echo -e "${BLUE}USE_VERBOSE_MODE: $2${NC}"
@@ -77,7 +81,7 @@ if [ "$CHECK_MODIFIED_FILES" = "yes" ]; then
 
    for i in "${FILE_ARRAY[@]}"
       do
-         if [ ${i: -3} = ".md" ]; then
+         if [ ${i: -3} = "${FILE_EXTENSION}" ]; then
             FIND_CALL+=("${i}")
             COMMAND="${FIND_CALL[@]}"
             $COMMAND &>> error.txt || true
