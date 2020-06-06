@@ -15,7 +15,6 @@ jobs:
         use-quiet-mode: 'yes'
         file-extension: ${{ matrix.file-extension }}
         folder-path: 'md'
-        check-modified-files-only: 'yes'
   shellcheck:
     runs-on: [ubuntu-latest]
     steps:
