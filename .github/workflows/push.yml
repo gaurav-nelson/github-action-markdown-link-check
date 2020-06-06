@@ -2,10 +2,6 @@ on: [pull_request]
 name: PR Checks
 jobs:
   markdown-link-check:
-    strategy:
-      matrix:
-        file-extension: [.md, .markdown]
-      fail-fast: false
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
@@ -13,7 +9,6 @@ jobs:
       uses: ./
       with:
         use-quiet-mode: 'yes'
-        file-extension: ${{ matrix.file-extension }}
         folder-path: 'md'
   shellcheck:
     runs-on: [ubuntu-latest]
