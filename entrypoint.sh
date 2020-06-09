@@ -18,7 +18,7 @@ FOLDER_PATH="$4"
 MAX_DEPTH="$5"
 CHECK_MODIFIED_FILES="$6"
 BASE_BRANCH="$7"
-if [ $8 -eq 0 ]; then
+if [ "$8" -eq 0 ]; then
    FILE_EXTENSION=".md"
 else
    FILE_EXTENSION="$8"
@@ -81,9 +81,9 @@ if [ "$CHECK_MODIFIED_FILES" = "yes" ]; then
 
    for i in "${FILE_ARRAY[@]}"
       do
-         if [ ${i: -3} = "${FILE_EXTENSION}" ]; then
+         if [ "${i##*.}" = "${FILE_EXTENSION}" ]; then
             FIND_CALL+=("${i}")
-            COMMAND="${FIND_CALL[@]}"
+            COMMAND="${FIND_CALL[*]}"
             $COMMAND &>> error.txt || true
             unset 'FIND_CALL[${#FIND_CALL[@]}-1]'
          fi
