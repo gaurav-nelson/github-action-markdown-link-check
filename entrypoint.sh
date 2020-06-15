@@ -18,10 +18,11 @@ FOLDER_PATH="$4"
 MAX_DEPTH="$5"
 CHECK_MODIFIED_FILES="$6"
 BASE_BRANCH="$7"
-if [ "$8" -eq 0 ]; then
-   FILE_EXTENSION=".md"
-else
+if [ -z "$8" ]; then
    FILE_EXTENSION="$8"
+else
+   echo -e "${YELLOW}No file extension specified, using .md as extension.${NC}"
+   FILE_EXTENSION=".md"
 fi
 
 echo -e "${BLUE}USE_QUIET_MODE: $1${NC}"
