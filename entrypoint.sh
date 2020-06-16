@@ -82,9 +82,9 @@ if [ "$CHECK_MODIFIED_FILES" = "yes" ]; then
 
    for i in "${FILE_ARRAY[@]}"
       do
-         if [ ${i: -3} = ".md" ]; then
+         if [ "${i##*.}" = "${FILE_EXTENSION}" ]; then
             FIND_CALL+=("${i}")
-            COMMAND="${FIND_CALL[@]}"
+            COMMAND="${FIND_CALL[*]}"
             $COMMAND &>> error.txt || true
             unset 'FIND_CALL[${#FIND_CALL[@]}-1]'
          fi
