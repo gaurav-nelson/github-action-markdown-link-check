@@ -21,7 +21,6 @@ BASE_BRANCH="$7"
 if [ -z "$8" ]; then
    FILE_EXTENSION="$8"
 else
-   echo -e "${YELLOW}No file extension specified, using .md as extension.${NC}"
    FILE_EXTENSION=".md"
 fi
 
