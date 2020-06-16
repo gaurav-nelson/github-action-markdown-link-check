@@ -19,9 +19,9 @@ MAX_DEPTH="$5"
 CHECK_MODIFIED_FILES="$6"
 BASE_BRANCH="$7"
 if [ -z "$8" ]; then
-   FILE_EXTENSION="$8"
-else
    FILE_EXTENSION=".md"
+else
+   FILE_EXTENSION="$8"
 fi
 
 echo -e "${BLUE}USE_QUIET_MODE: $1${NC}"
