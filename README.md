@@ -165,6 +165,5 @@ Markdown link check.
 
 | Repository| Stars | Workflow file |
 |:----------|:--------------|:------------|
-|https://github.com/fluxcd/flux|[![GitHub stars](https://img.shields.io/github/stars/fluxcd/flux?style=social)](https://github.com/fluxcd/flux/stargazers)| https://github.com/fluxcd/flux/blob/master/.github/workflows/docs.yaml|
 |https://github.com/tendermint/tendermint|[![GitHub stars](https://img.shields.io/github/stars/tendermint/tendermint?style=social)](https://github.com/tendermint/tendermint/stargazers)| https://github.com/tendermint/tendermint/blob/master/.github/workflows/linkchecker.yml|
 |https://github.com/stoplightio/prism|[![GitHub stars](https://img.shields.io/github/stars/stoplightio/prism?style=social)](https://github.com/stoplightio/prism/stargazers)| https://github.com/stoplightio/prism/blob/master/.github/workflows/markdown-links.yml|
