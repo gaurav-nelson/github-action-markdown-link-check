@@ -94,9 +94,9 @@ if [ "$CHECK_MODIFIED_FILES" = "yes" ]; then
 else
 
    if [ "$5" -ne -1 ]; then
-      FIND_CALL=('find' "${FOLDER_PATH}" '-name' '*'"${FILE_EXTENSION}" '-not' '-path' './node_modules/*' '-maxdepth' "${MAX_DEPTH}" '-exec' 'markdown-link-check' '{}')
+      FIND_CALL=('find' ${FOLDER_PATH} '-name' '*'"${FILE_EXTENSION}" '-not' '-path' './node_modules/*' '-maxdepth' "${MAX_DEPTH}" '-exec' 'markdown-link-check' '{}')
    else
-      FIND_CALL=('find' "${FOLDER_PATH}" '-name' '*'"${FILE_EXTENSION}" '-not' '-path' './node_modules/*' '-exec' 'markdown-link-check' '{}')
+      FIND_CALL=('find' ${FOLDER_PATH} '-name' '*'"${FILE_EXTENSION}" '-not' '-path' './node_modules/*' '-exec' 'markdown-link-check' '{}')
    fi
 
    if [ -f "$CONFIG_FILE" ]; then
