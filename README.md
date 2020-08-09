@@ -35,11 +35,12 @@ You customize the action by using the following variables:
 |`use-quiet-mode`| Specify `yes` to only show errors in output.| `no`|
 |`use-verbose-mode`|Specify `yes` to show detailed HTTP status for checked links. |`no` |
 |`config-file`|Specify a [custom configuration file](https://github.com/tcort/markdown-link-check#config-file-format) for markdown-link-check. You can use it to remove false-positives by specifying replacement patterns and ignore patterns.|`mlc_config.json`|
-|`folder-path` |By default the `github-action-markdown-link-check` action checks for all markdown files in your repository. Use this option to limit checks to only specific folders. |`.` |
+|`folder-path` |By default the `github-action-markdown-link-check` action checks for all markdown files in your repository. Use this option to limit checks to only specific folders. Use comma separated values for checking multiple folders. |`.` |
 |`max-depth` |Specify how many levels deep you want to check in the directory structure. The default value is `-1` which means check all levels.|`-1` |
 |`check-modified-files-only` |Use this variable to only check modified markdown files instead of checking all markdown files. The action uses `git` to find modified markdown files. Only use this variable when you run the action to check pull requests.|`no`|
 |`base-branch`|Use this variable to specify the branch to compare when finding modified markdown files. |`master`|
 |`file-extension`|By default the `github-action-markdown-link-check` action checks files in your repository with the `.md` extension. Use this option to specify a different file extension such as `.markdown` or `.mdx`.|`.md`|
+|`file-path` | Specify additional files (with complete path and extension) you want to check. Use comma separated values for checking multiple files. | - |
 
 #### Sample workflow with variables
 
@@ -140,6 +141,23 @@ jobs:
         use-verbose-mode: 'yes'
         check-modified-files-only: 'yes'
 
+```
+
+### Check multiple directories and files
+
+```yml
+on: [pull_request]
+name: Check links for modified files
+jobs:
+  markdown-link-check:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - uses: gaurav-nelson/github-action-markdown-link-check@v1
+      with:
+        use-quiet-mode: 'yes'
+        folder-path: 'md/dir1, md/dir2'
+        file-path: './README.md, ./LICENSE, ./md/file4.markdown'
 ```
 
 ## Versioning

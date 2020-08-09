@@ -10,6 +10,8 @@ BLUE='\033[0;34m'
 npm i -g markdown-link-check@3.8.1
 
 declare -a FIND_CALL
+declare -a COMMAND_DIRS COMMAND_FILES
+declare -a COMMAND_FILES
 
 USE_QUIET_MODE="$1"
 USE_VERBOSE_MODE="$2"
@@ -23,6 +25,18 @@ if [ -z "$8" ]; then
 else
    FILE_EXTENSION="$8"
 fi
+FILE_PATH="$9"
+
+if [ -f "$CONFIG_FILE" ]; then
+   echo -e "${BLUE}Using markdown-link-check configuration file: ${YELLOW}$CONFIG_FILE${NC}"
+else
+   echo -e "${BLUE}Cannot find ${YELLOW}$CONFIG_FILE${NC}"
+   echo -e "${YELLOW}NOTE: See https://github.com/tcort/markdown-link-check#config-file-format to know more about"
+   echo -e "customizing markdown-link-check by using a configuration file.${NC}"
+fi
+
+FOLDERS=""
+FILES=""
 
 echo -e "${BLUE}USE_QUIET_MODE: $1${NC}"
 echo -e "${BLUE}USE_VERBOSE_MODE: $2${NC}"
@@ -30,26 +44,104 @@ echo -e "${BLUE}FOLDER_PATH: $4${NC}"
 echo -e "${BLUE}MAX_DEPTH: $5${NC}"
 echo -e "${BLUE}CHECK_MODIFIED_FILES: $6${NC}"
 echo -e "${BLUE}FILE_EXTENSION: $8${NC}"
+echo -e "${BLUE}FILE_PATH: $9${NC}"
+
+handle_dirs () {
+
+   IFS=', ' read -r -a DIRLIST <<< "$FOLDER_PATH"
+
+   for index in "${!DIRLIST[@]}"
+   do
+      COMMAND_DIRS+=("${DIRLIST[index]}")
+   done
+   FOLDERS="${COMMAND_DIRS[*]}"
+
+}
+
+handle_files () {
+
+   IFS=', ' read -r -a FILELIST <<< "$FILE_PATH"
+
+   for index in "${!FILELIST[@]}"
+   do
+      if [ $index == 0 ]; then
+         COMMAND_FILES+=("-wholename ${FILELIST[index]}")
+      else
+         COMMAND_FILES+=("-o -wholename ${FILELIST[index]}")
+      fi
+   done
+   FILES="${COMMAND_FILES[*]}"
+
+}
 
 check_errors () {
- if [ -e error.txt ] ; then
-   if grep -q "ERROR:" error.txt; then
-     echo -e "${YELLOW}=========================> MARKDOWN LINK CHECK <=========================${NC}"
-     cat error.txt
-     printf "\n"
-     echo -e "${YELLOW}=========================================================================${NC}"
-     exit 113
+
+   if [ -e error.txt ] ; then
+      if grep -q "ERROR:" error.txt; then
+         echo -e "${YELLOW}=========================> MARKDOWN LINK CHECK <=========================${NC}"
+         cat error.txt
+         printf "\n"
+         echo -e "${YELLOW}=========================================================================${NC}"
+         exit 113
+      else
+         echo -e "${YELLOW}=========================> MARKDOWN LINK CHECK <=========================${NC}"
+         printf "\n"
+         echo -e "${GREEN}[✔] All links are good!${NC}"
+         printf "\n"
+         echo -e "${YELLOW}=========================================================================${NC}"
+      fi
    else
-     echo -e "${YELLOW}=========================> MARKDOWN LINK CHECK <=========================${NC}"
-     printf "\n"
-     echo -e "${GREEN}[✔] All links are good!${NC}"
-     printf "\n"
-     echo -e "${YELLOW}=========================================================================${NC}"
+      echo -e "${GREEN}All good!${NC}"
    fi
- else
-   echo -e "${GREEN}All good!${NC}"
- fi
+
 }
+
+add_options () {
+
+   if [ -f "$CONFIG_FILE" ]; then
+      FIND_CALL+=('--config' "${CONFIG_FILE}")
+   fi
+
+   if [ "$USE_QUIET_MODE" = "yes" ]; then
+      FIND_CALL+=('-q')
+   fi
+
+   if [ "$USE_VERBOSE_MODE" = "yes" ]; then
+      FIND_CALL+=('-v')
+   fi
+
+}
+
+check_additional_files () {
+
+   if [ -n "$FILES" ]; then
+      if [ "$MAX_DEPTH" -ne -1 ]; then
+         FIND_CALL=('find' '.' '-type' 'f' '(' ${FILES} ')' '-not' '-path' './node_modules/*' '-maxdepth' "${MAX_DEPTH}" '-exec' 'markdown-link-check' '{}')
+      else
+         FIND_CALL=('find' '.' '-type' 'f' '(' ${FILES} ')' '-not' '-path' './node_modules/*' '-exec' 'markdown-link-check' '{}')
+      fi
+
+      add_options
+
+      FIND_CALL+=(';')
+
+      set -x
+      "${FIND_CALL[@]}" &>> error.txt
+      set +x
+
+   fi
+
+}
+
+if [ -z "$8" ]; then
+   FOLDERS="."
+else
+   handle_dirs
+fi
+
+if [ -n "$9" ]; then
+   handle_files
+fi
 
 if [ "$CHECK_MODIFIED_FILES" = "yes" ]; then
 
@@ -60,22 +152,7 @@ if [ "$CHECK_MODIFIED_FILES" = "yes" ]; then
 
    FIND_CALL=('markdown-link-check')
 
-   if [ -f "$CONFIG_FILE" ]; then
-      echo -e "${BLUE}Using markdown-link-check configuration file: ${YELLOW}$CONFIG_FILE${NC}"
-      FIND_CALL+=('--config' "${CONFIG_FILE}")
-   else
-      echo -e "${BLUE}Cannot find ${YELLOW}$CONFIG_FILE${NC}"
-      echo -e "${YELLOW}NOTE: See https://github.com/tcort/markdown-link-check#config-file-format to know more about"
-      echo -e "customizing markdown-link-check by using a configuration file.${NC}"
-   fi
-
-   if [ "$USE_QUIET_MODE" = "yes" ]; then
-      FIND_CALL+=('-q')
-   fi
-
-   if [ "$USE_VERBOSE_MODE" = "yes" ]; then
-      FIND_CALL+=('-v')
-   fi
+   add_options
 
    mapfile -t FILE_ARRAY < <( git diff --name-only "$MASTER_HASH" )
 
@@ -88,39 +165,29 @@ if [ "$CHECK_MODIFIED_FILES" = "yes" ]; then
             unset 'FIND_CALL[${#FIND_CALL[@]}-1]'
          fi
       done
+
+   check_additional_files
    
    check_errors
 
 else
 
    if [ "$5" -ne -1 ]; then
-      FIND_CALL=('find' "${FOLDER_PATH}" '-name' '*'"${FILE_EXTENSION}" '-not' '-path' './node_modules/*' '-maxdepth' "${MAX_DEPTH}" '-exec' 'markdown-link-check' '{}')
+      FIND_CALL=('find' ${FOLDERS} '-name' '*'"${FILE_EXTENSION}" '-not' '-path' './node_modules/*' '-maxdepth' "${MAX_DEPTH}" '-exec' 'markdown-link-check' '{}')
    else
-      FIND_CALL=('find' "${FOLDER_PATH}" '-name' '*'"${FILE_EXTENSION}" '-not' '-path' './node_modules/*' '-exec' 'markdown-link-check' '{}')
+      FIND_CALL=('find' ${FOLDERS} '-name' '*'"${FILE_EXTENSION}" '-not' '-path' './node_modules/*' '-exec' 'markdown-link-check' '{}')
    fi
 
-   if [ -f "$CONFIG_FILE" ]; then
-      echo -e "${BLUE}Using markdown-link-check configuration file: ${YELLOW}$CONFIG_FILE${NC}"
-      FIND_CALL+=('--config' "${CONFIG_FILE}")
-   else
-      echo -e "${BLUE}Cannot find ${YELLOW}$CONFIG_FILE${NC}"
-      echo -e "${YELLOW}NOTE: See https://github.com/tcort/markdown-link-check#config-file-format to know more about"
-      echo -e "customizing markdown-link-check by using a configuration file.${NC}"
-   fi
-
-   if [ "$USE_QUIET_MODE" = "yes" ]; then
-      FIND_CALL+=('-q')
-   fi
-
-   if [ "$USE_VERBOSE_MODE" = "yes" ]; then
-      FIND_CALL+=('-v')
-   fi
+   add_options
 
    FIND_CALL+=(';')
 
    set -x
    "${FIND_CALL[@]}" &>> error.txt
    set +x
+
+   check_additional_files
+
    check_errors
 
 fi
