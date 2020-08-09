@@ -9,7 +9,8 @@ jobs:
       uses: ./
       with:
         use-quiet-mode: 'yes'
-        folder-path: 'md'
+        folder-path: 'md/dir1, md/dir2'
+        file-path: './README.md, ./LICENSE, ./md/file4.markdown'
   shellcheck:
     runs-on: [ubuntu-latest]
     steps:
