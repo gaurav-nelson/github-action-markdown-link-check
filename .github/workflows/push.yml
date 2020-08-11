@@ -3,14 +3,30 @@ name: PR Checks
 jobs:
   markdown-link-check:
     runs-on: ubuntu-latest
-    steps:
+    steps: 
     - uses: actions/checkout@master
-    - name: markdown-link-check
+    - id: markdown-link-check
       uses: ./
       with:
         use-quiet-mode: 'yes'
         folder-path: 'md/dir1, md/dir2'
         file-path: './README.md, ./LICENSE, ./md/file4.markdown'
+    - id: get-comment-body
+      run: |
+          if [ -e error.txt ] ; then
+            body=$(head -10 error.txt)
+            body="${body//'%'/'%25'}"
+            body="${body//$'\n'/'%0A'}"
+            body="${body//$'\r'/'%0D'}" 
+          else
+            body="[:heavy_check_mark:] All links are good."
+          fi
+          echo ::set-output name=body::$body
+    - name: Create comment
+    - uses: peter-evans/create-or-update-comment@v1
+      with:
+        edit-mode: replace
+        body: ${{ steps.get-comment-body.outputs.body }}
   shellcheck:
     runs-on: [ubuntu-latest]
     steps:
