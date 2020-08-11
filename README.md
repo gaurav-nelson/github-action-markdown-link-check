@@ -1,5 +1,5 @@
 # GitHub Action - Markdown link check 🔗✔️
-[![GitHub Marketplace](https://img.shields.io/badge/GitHub%20Marketplace-Markdown%20link%20check-brightgreen?style=for-the-badge)](https://github.com/marketplace/actions/markdown-link-check)
+[![GitHub Marketplace](https://img.shields.io/badge/GitHub%20Marketplace-Markdown%20link%20check-brightgreen?style=for-the-badge)](https://github.com/marketplace/actions/markdown-link-check) [![Buy us a tree](https://img.shields.io/badge/Treeware-%F0%9F%8C%B3-lightgreen?style=for-the-badge)](https://plant.treeware.earth/gaurav-nelson/github-action-markdown-link-check)
 
 This GitHub action checks all Markdown files in your repository for broken links. (Uses [tcort/markdown-link-check](https://github.com/tcort/markdown-link-check))
 
@@ -185,3 +185,6 @@ Markdown link check.
 |:----------|:--------------|:------------|
 |https://github.com/tendermint/tendermint|[![GitHub stars](https://img.shields.io/github/stars/tendermint/tendermint?style=social)](https://github.com/tendermint/tendermint/stargazers)| https://github.com/tendermint/tendermint/blob/master/.github/workflows/linkchecker.yml|
 |https://github.com/stoplightio/prism|[![GitHub stars](https://img.shields.io/github/stars/stoplightio/prism?style=social)](https://github.com/stoplightio/prism/stargazers)| https://github.com/stoplightio/prism/blob/master/.github/workflows/markdown-links.yml|
+
+## Licence
+This package is [Treeware](https://treeware.earth). If you use it in production, then we ask that you [**buy the world a tree**](https://plant.treeware.earth/gaurav-nelson/github-action-markdown-link-check) to thank us for our work. By contributing to the Treeware forest you’ll be creating employment for local families and restoring wildlife habitats.
