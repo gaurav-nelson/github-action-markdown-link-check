@@ -40,7 +40,7 @@ You customize the action by using the following variables:
 |`check-modified-files-only` |Use this variable to only check modified markdown files instead of checking all markdown files. The action uses `git` to find modified markdown files. Only use this variable when you run the action to check pull requests.|`no`|
 |`base-branch`|Use this variable to specify the branch to compare when finding modified markdown files. |`master`|
 |`file-extension`|By default the `github-action-markdown-link-check` action checks files in your repository with the `.md` extension. Use this option to specify a different file extension such as `.markdown` or `.mdx`.|`.md`|
-|`file-path` | Specify additional files (with complete path and extension) you want to check. Use comma separated values for checking multiple files. | - |
+|`file-path` | Specify additional files (with complete path and extension) you want to check. Use comma separated values for checking multiple files. See [Check multiple directories and files](#check-multiple-directories-and-files) section for usage.| - |
 
 #### Sample workflow with variables
 
