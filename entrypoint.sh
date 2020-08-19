@@ -6,6 +6,7 @@ NC='\033[0m' # No Color
 GREEN='\033[0;32m'
 YELLOW='\033[0;33m'
 BLUE='\033[0;34m'
+RED='\033[0;31m'
 
 npm i -g markdown-link-check@3.8.1
 
@@ -52,6 +53,10 @@ handle_dirs () {
 
    for index in "${!DIRLIST[@]}"
    do
+      if [ ! -d "${DIRLIST[index]}" ]; then
+         echo -e "${RED}ERROR [✖] Can't find the directory: ${YELLOW}${DIRLIST[index]}${NC}"
+         exit 2
+      fi
       COMMAND_DIRS+=("${DIRLIST[index]}")
    done
    FOLDERS="${COMMAND_DIRS[*]}"
@@ -64,6 +69,10 @@ handle_files () {
 
    for index in "${!FILELIST[@]}"
    do
+      if [ ! -f "${FILELIST[index]}" ]; then
+         echo -e "${RED}ERROR [✖] Can't find the file: ${YELLOW}${FILELIST[index]}${NC}"
+         exit 2
+      fi
       if [ $index == 0 ]; then
          COMMAND_FILES+=("-wholename ${FILELIST[index]}")
       else
