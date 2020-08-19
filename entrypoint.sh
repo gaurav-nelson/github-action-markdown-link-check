@@ -73,10 +73,10 @@ handle_files () {
          echo -e "${RED}ERROR [✖] Can't find the file: ${YELLOW}${FILELIST[index]}${NC}"
          exit 2
       fi
-      if [ "$index" == 0 ]; then
-         COMMAND_FILES+=("-wholename ${FILELIST[index]}")
+      if [ $index == 0 ]; then
+         COMMAND_FILES+=("${FILELIST[index]}")
       else
-         COMMAND_FILES+=("-o -wholename ${FILELIST[index]}")
+         COMMAND_FILES+=("|${FILELIST[index]}")
       fi
    done
    FILES="${COMMAND_FILES[*]}"
@@ -125,9 +125,9 @@ check_additional_files () {
 
    if [ -n "$FILES" ]; then
       if [ "$MAX_DEPTH" -ne -1 ]; then
-         FIND_CALL=('find' '.' '-type' 'f' '(' ${FILES} ')' '-not' '-path' './node_modules/*' '-maxdepth' "${MAX_DEPTH}" '-exec' 'markdown-link-check' '{}')
+         FIND_CALL=('fd' '--type' 'f' '('"${FILES// /}"')' '--max-depth' "${MAX_DEPTH}" '.' '--exec' 'markdown-link-check')
       else
-         FIND_CALL=('find' '.' '-type' 'f' '(' ${FILES} ')' '-not' '-path' './node_modules/*' '-exec' 'markdown-link-check' '{}')
+         FIND_CALL=('fd' '--type' 'f' '('"${FILES// /}"')' '.' '--exec' 'markdown-link-check')
       fi
 
       add_options
@@ -182,9 +182,9 @@ if [ "$CHECK_MODIFIED_FILES" = "yes" ]; then
 else
 
    if [ "$5" -ne -1 ]; then
-      FIND_CALL=('find' ${FOLDERS} '-name' '*'"${FILE_EXTENSION}" '-not' '-path' './node_modules/*' '-maxdepth' "${MAX_DEPTH}" '-exec' 'markdown-link-check' '{}')
+      FIND_CALL=('fd' '.' ${FOLDERS} '-e' "${FILE_EXTENSION}" '--max-depth' "${MAX_DEPTH}" '--exec' 'markdown-link-check')
    else
-      FIND_CALL=('find' ${FOLDERS} '-name' '*'"${FILE_EXTENSION}" '-not' '-path' './node_modules/*' '-exec' 'markdown-link-check' '{}')
+      FIND_CALL=('fd' '.' ${FOLDERS} '-e' "${FILE_EXTENSION}" '--exec' 'markdown-link-check')
    fi
 
    add_options
