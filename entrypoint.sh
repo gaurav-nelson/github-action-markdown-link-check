@@ -163,7 +163,7 @@ if [ "$CHECK_MODIFIED_FILES" = "yes" ]; then
 
    add_options
 
-   mapfile -t FILE_ARRAY < <( git diff --name-only "$MASTER_HASH" )
+   mapfile -t FILE_ARRAY < <( git diff --name-only --diff-filter=AM "$MASTER_HASH" )
 
    for i in "${FILE_ARRAY[@]}"
       do
