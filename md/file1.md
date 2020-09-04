@@ -23,3 +23,9 @@ Headings in `readme.md` are [not checked](file1.md#bravo).
 But [missing files are reported](missing-example.js).
 
 [alpha]: #alpha
+
+### Check mailto links
+
+Maksim Izmaylov <max@windingtree.com>
+
+
