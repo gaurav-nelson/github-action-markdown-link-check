@@ -26,6 +26,7 @@ This GitHub action checks all Markdown files in your repository for broken links
 - [Scheduled runs](#scheduled-runs)
 - [Disable check for some links](#disable-check-for-some-links)
 - [Check only modified files in a pull request](#check-only-modified-files-in-a-pull-request)
+- [Status code 429: Too many requests](#too-many-requests)
 
 ### Custom variables
 You customize the action by using the following variables:
@@ -159,6 +160,10 @@ jobs:
         folder-path: 'md/dir1, md/dir2'
         file-path: './README.md, ./LICENSE, ./md/file4.markdown'
 ```
+
+### Too many requests
+Use `retryOn429`, `retry-after`, `retryCount`, and `fallbackRetryDelay` in your custom configuration file.
+See https://github.com/tcort/markdown-link-check#config-file-format for details.
 
 ## Versioning
 GitHub Action - Markdown link check follows the [GitHub recommended versioning strategy](https://github.com/actions/toolkit/blob/master/docs/action-versioning.md). 
