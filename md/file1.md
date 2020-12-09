@@ -7,7 +7,11 @@ www.google.com
 [This is a broken link](https://www.exampleexample.cox)
 <!-- markdown-link-check-disable-next-line -->
 [This is another broken link](http://ignored-domain.com) but its ignored using a
-configuration file. 
+configuration file.
+
+This is to test URLencoding.
+<https://en.wikipedia.org/wiki/Glob_%28programming%29>
+<https://research.web3.foundation/en/latest/polkadot/Token%20Economics.html#inflation-model>
 
 ### Alpha
 
