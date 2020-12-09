@@ -11,7 +11,6 @@ configuration file.
 
 This is to test URLencoding.
 <https://en.wikipedia.org/wiki/Glob_%28programming%29>
-<https://research.web3.foundation/en/latest/polkadot/Token%20Economics.html#inflation-model>
 
 ### Alpha
 
