@@ -11,6 +11,7 @@ configuration file.
 
 This is to test URLencoding.
 <https://en.wikipedia.org/wiki/Glob_%28programming%29>
+<https://www.google.com/?q=url%20with%20a%20space>
 
 ### Alpha
 
