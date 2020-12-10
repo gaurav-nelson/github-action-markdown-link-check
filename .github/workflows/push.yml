@@ -16,8 +16,8 @@ jobs:
     - name: markdown-link-check
       uses: ./
       with:
-        # Add a test to restrict the test to just dir1 and dir2, not dir3.
-        folder-path: './md/dir1, ./md/dir2'
+        # Add a test to restrict the test to just dir4 and dir5.
+        folder-path: './md/dir4, ./md/dir5'
   shellcheck:
     runs-on: [ubuntu-latest]
     steps:
