@@ -20,6 +20,20 @@ This GitHub action checks all Markdown files in your repository for broken links
        - uses: gaurav-nelson/github-action-markdown-link-check@v1
    ```
 
+### Real-life usage samples
+
+Following is a list of some of the repositories which are using GitHub Action -
+Markdown link check.
+
+1. [GoogleChrome/lighthouse](https://github.com/GoogleChrome/lighthouse/blob/master/.github/workflows/check-md-links.yml)
+   ![](https://img.shields.io/github/stars/GoogleChrome/lighthouse?style=social)
+1. [hashicorp/packer](https://github.com/hashicorp/packer/blob/master/.github/workflows/linkchecker.yml)
+   ![](https://img.shields.io/github/stars/hashicorp/packer?style=social)
+1. [prometheus-operator](https://github.com/prometheus-operator/prometheus-operator/blob/master/.github/workflows/ci.yaml#L29)
+   ![](https://img.shields.io/github/stars/prometheus-operator/prometheus-operator?style=social)
+1. [apache/apisix](https://github.com/apache/apisix/blob/master/.github/workflows/markdown-link-checker.yml)
+   ![](https://img.shields.io/github/stars/apache/apisix?style=social)
+
 ## Configuration
 
 - [Custom variables](#custom-variables)
@@ -165,6 +179,13 @@ jobs:
 Use `retryOn429`, `retry-after`, `retryCount`, and `fallbackRetryDelay` in your custom configuration file.
 See https://github.com/tcort/markdown-link-check#config-file-format for details.
 
+Or mark 429 status code as alive:
+```json
+{
+  "aliveStatusCodes": [429, 200]
+}
+```
+
 ## Versioning
 GitHub Action - Markdown link check follows the [GitHub recommended versioning strategy](https://github.com/actions/toolkit/blob/master/docs/action-versioning.md). 
 
@@ -180,16 +201,3 @@ GitHub Action - Markdown link check follows the [GitHub recommended versioning s
    ```yml
    - uses: gaurav-nelson/github-action-markdown-link-check@44a942b2f7ed0dc101d556f281e906fb79f1f478
    ```
-
-## Real-life usage samples
-
-Following is a list of some of the repositories which are using GitHub Action -
-Markdown link check.
-
-| Repository| Stars | Workflow file |
-|:----------|:--------------|:------------|
-|https://github.com/tendermint/tendermint|[![GitHub stars](https://img.shields.io/github/stars/tendermint/tendermint?style=social)](https://github.com/tendermint/tendermint/stargazers)| https://github.com/tendermint/tendermint/blob/master/.github/workflows/linkchecker.yml|
-|https://github.com/stoplightio/prism|[![GitHub stars](https://img.shields.io/github/stars/stoplightio/prism?style=social)](https://github.com/stoplightio/prism/stargazers)| https://github.com/stoplightio/prism/blob/master/.github/workflows/markdown-links.yml|
-
-## Licence
-This package is [Treeware](https://treeware.earth). If you use it in production, then we ask that you [**buy the world a tree**](https://plant.treeware.earth/gaurav-nelson/github-action-markdown-link-check) to thank us for our work. By contributing to the Treeware forest you’ll be creating employment for local families and restoring wildlife habitats.
