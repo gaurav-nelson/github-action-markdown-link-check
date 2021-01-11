@@ -25,6 +25,7 @@ This GitHub action checks all Markdown files in your repository for broken links
 Following is a list of some of the repositories which are using GitHub Action -
 Markdown link check.
 
+1. [netdata](https://github.com/netdata/netdata/blob/master/.github/workflows/docs.yml) ![](https://img.shields.io/github/stars/netdata/netdata?style=social)
 1. [GoogleChrome/lighthouse](https://github.com/GoogleChrome/lighthouse/blob/master/.github/workflows/check-md-links.yml)
    ![](https://img.shields.io/github/stars/GoogleChrome/lighthouse?style=social)
 1. [hashicorp/packer](https://github.com/hashicorp/packer/blob/master/.github/workflows/linkchecker.yml)
