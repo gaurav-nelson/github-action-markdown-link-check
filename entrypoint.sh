@@ -11,8 +11,9 @@ RED='\033[0;31m'
 npm i -g markdown-link-check@3.8.6
 
 declare -a FIND_CALL
-declare -a COMMAND_DIRS COMMAND_FILES
+declare -a COMMAND_DIRS
 declare -a COMMAND_FILES
+declare -a COMMAND_EXCLUDE_DIRS
 
 USE_QUIET_MODE="$1"
 USE_VERBOSE_MODE="$2"
@@ -27,6 +28,7 @@ else
    FILE_EXTENSION="$8"
 fi
 FILE_PATH="$9"
+EXCLUDE_DIRS=$(echo ${10})
 
 if [ -f "$CONFIG_FILE" ]; then
    echo -e "${BLUE}Using markdown-link-check configuration file: ${YELLOW}$CONFIG_FILE${NC}"
@@ -38,6 +40,7 @@ fi
 
 FOLDERS=""
 FILES=""
+EXCLUDED=""
 
 echo -e "${BLUE}USE_QUIET_MODE: $1${NC}"
 echo -e "${BLUE}USE_VERBOSE_MODE: $2${NC}"
@@ -55,6 +58,7 @@ handle_dirs () {
    do
       if [ ! -d "${DIRLIST[index]}" ]; then
          echo -e "${RED}ERROR [✖] Can't find the directory: ${YELLOW}${DIRLIST[index]}${NC}"
+         echo -e "${RED}Check folder-path variable!"
          exit 2
       fi
       COMMAND_DIRS+=("${DIRLIST[index]}")
@@ -71,6 +75,7 @@ handle_files () {
    do
       if [ ! -f "${FILELIST[index]}" ]; then
          echo -e "${RED}ERROR [✖] Can't find the file: ${YELLOW}${FILELIST[index]}${NC}"
+         echo -e "${RED}Check file-path variable!"
          exit 2
       fi
       if [ "$index" == 0 ]; then
@@ -81,6 +86,22 @@ handle_files () {
    done
    FILES="${COMMAND_FILES[*]}"
 
+}
+
+handle_excluded_dirs () {
+   IFS=', ' read -r -a EXDIRLIST <<< "$EXCLUDE_DIRS"
+
+   for index in "${!EXDIRLIST[@]}"
+   do
+      if [ ! -d "${EXDIRLIST[index]}" ]; then
+         echo -e "${RED}ERROR [✖] Can't find the directory: ${YELLOW}${EXDIRLIST[index]}${NC}"
+         echo -e "${RED}Check exclude-dir variable!"
+         exit 2
+      fi
+      COMMAND_EXCLUDE_DIRS+=("-not -path ${EXDIRLIST[index]}/*")
+   done
+   EXCLUDED="${COMMAND_EXCLUDE_DIRS[*]}"
+   echo ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>       ${EXCLUDED}       <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<"
 }
 
 check_errors () {
@@ -150,6 +171,10 @@ fi
 
 if [ -n "$9" ]; then
    handle_files
+fi
+
+if [ -n "$EXCLUDE_DIRS" ]; then
+   handle_excluded_dirs
 fi
 
 if [ "$CHECK_MODIFIED_FILES" = "yes" ]; then
