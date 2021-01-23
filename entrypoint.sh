@@ -146,9 +146,9 @@ check_additional_files () {
 
    if [ -n "$FILES" ]; then
       if [ "$MAX_DEPTH" -ne -1 ]; then
-         FIND_CALL=('find' '.' '-type' 'f' '(' ${FILES} ')' "${EXCLUDED}" '-maxdepth' "${MAX_DEPTH}" '-exec' 'markdown-link-check' '{}')
+         FIND_CALL=('find' '.' '-type' 'f' '(' ${FILES} ')' ${EXCLUDED} '-maxdepth' "${MAX_DEPTH}" '-exec' 'markdown-link-check' '{}')
       else
-         FIND_CALL=('find' '.' '-type' 'f' '(' ${FILES} ')' "${EXCLUDED}" '-exec' 'markdown-link-check' '{}')
+         FIND_CALL=('find' '.' '-type' 'f' '(' ${FILES} ')' ${EXCLUDED} '-exec' 'markdown-link-check' '{}')
       fi
 
       add_options
@@ -207,9 +207,9 @@ if [ "$CHECK_MODIFIED_FILES" = "yes" ]; then
 else
 
    if [ "$5" -ne -1 ]; then
-      FIND_CALL=('find' ${FOLDERS} '-name' '*'"${FILE_EXTENSION}" "${EXCLUDED}" '-maxdepth' "${MAX_DEPTH}" '-exec' 'markdown-link-check' '{}')
+      FIND_CALL=('find' ${FOLDERS} '-name' '*'"${FILE_EXTENSION}" ${EXCLUDED} '-maxdepth' "${MAX_DEPTH}" '-exec' 'markdown-link-check' '{}')
    else
-      FIND_CALL=('find' ${FOLDERS} '-name' '*'"${FILE_EXTENSION}" "${EXCLUDED}" '-exec' 'markdown-link-check' '{}')
+      FIND_CALL=('find' ${FOLDERS} '-name' '*'"${FILE_EXTENSION}" ${EXCLUDED} '-exec' 'markdown-link-check' '{}')
    fi
 
    add_options
