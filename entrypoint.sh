@@ -125,9 +125,9 @@ check_additional_files () {
 
    if [ -n "$FILES" ]; then
       if [ "$MAX_DEPTH" -ne -1 ]; then
-         FIND_CALL=('fd' '--type' 'f' '('"${FILES// /}"')' '--max-depth' "${MAX_DEPTH}" '.' '--exec' 'markdown-link-check')
+         FIND_CALL=('fd' '--type' 'f' '-p' '('"${FILES// /}"')' '--max-depth' "${MAX_DEPTH}" '.' '--exec' 'markdown-link-check')
       else
-         FIND_CALL=('fd' '--type' 'f' '('"${FILES// /}"')' '.' '--exec' 'markdown-link-check')
+         FIND_CALL=('fd' '--type' 'f' '-p' '('"${FILES// /}"')' '.' '--exec' 'markdown-link-check')
       fi
 
       add_options
