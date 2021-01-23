@@ -98,10 +98,10 @@ handle_excluded_dirs () {
          echo -e "${RED}Check exclude-dir variable!"
          exit 2
       fi
-      COMMAND_EXCLUDE_DIRS+=("-not -path ${EXDIRLIST[index]}/*")
+      COMMAND_EXCLUDE_DIRS+=("-not -path '${EXDIRLIST[index]}/*'")
    done
    EXCLUDED="${COMMAND_EXCLUDE_DIRS[*]}"
-   echo ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>       ${EXCLUDED}       <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<"
+   echo -e "${YELLOW}${EXCLUDED}${NC}"
 }
 
 check_errors () {
