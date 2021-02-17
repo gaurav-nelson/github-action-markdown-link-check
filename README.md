@@ -34,6 +34,8 @@ Markdown link check.
    ![](https://img.shields.io/github/stars/prometheus-operator/prometheus-operator?style=social)
 1. [apache/apisix](https://github.com/apache/apisix/blob/master/.github/workflows/markdown-link-checker.yml)
    ![](https://img.shields.io/github/stars/apache/apisix?style=social)
+   
+If you are using this on production, consider [buying me a coffee](https://selz.co/GAAGAc7) ☕.
 
 ## Configuration
 
@@ -202,3 +204,10 @@ GitHub Action - Markdown link check follows the [GitHub recommended versioning s
    ```yml
    - uses: gaurav-nelson/github-action-markdown-link-check@44a942b2f7ed0dc101d556f281e906fb79f1f478
    ```
+   
+<hr>
+<p align="center">
+ <a name="coffee" href="https://selz.co/GAAGAc7">
+  <img src="https://i.imgur.com/1Q1YoHz.gif" alt="Buy me a coffee.">
+ </a>
+</p>
