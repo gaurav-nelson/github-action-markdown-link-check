@@ -17,8 +17,9 @@ jobs:
       uses: ./
       with:
         # Add a test to restrict the test to just dir4 and dir5.
-        folder-path: './md/dir4, ./md/dir5'
+        #folder-path: './md/dir4, ./md/dir5, ./md/dir3'
         file-path: './md/AdditionalFileTest1.md, ./md/AdditionalFileTest2.md'
+        exclude: 'md/dir3/dir3level2, md/dir4, md/dir5'
   shellcheck:
     runs-on: [ubuntu-latest]
     steps:

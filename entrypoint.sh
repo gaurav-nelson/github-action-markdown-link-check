@@ -11,8 +11,9 @@ RED='\033[0;31m'
 npm i -g markdown-link-check@3.8.6
 
 declare -a FIND_CALL
-declare -a COMMAND_DIRS COMMAND_FILES
+declare -a COMMAND_DIRS
 declare -a COMMAND_FILES
+declare -a COMMAND_EXCLUDE
 
 USE_QUIET_MODE="$1"
 USE_VERBOSE_MODE="$2"
@@ -27,6 +28,7 @@ else
    FILE_EXTENSION="$8"
 fi
 FILE_PATH="$9"
+EXCLUDE=$(echo ${10})
 
 if [ -f "$CONFIG_FILE" ]; then
    echo -e "${BLUE}Using markdown-link-check configuration file: ${YELLOW}$CONFIG_FILE${NC}"
@@ -38,6 +40,7 @@ fi
 
 FOLDERS=""
 FILES=""
+EXCLUDED_FILES_DIRS=""
 
 echo -e "${BLUE}USE_QUIET_MODE: $1${NC}"
 echo -e "${BLUE}USE_VERBOSE_MODE: $2${NC}"
@@ -46,6 +49,7 @@ echo -e "${BLUE}MAX_DEPTH: $5${NC}"
 echo -e "${BLUE}CHECK_MODIFIED_FILES: $6${NC}"
 echo -e "${BLUE}FILE_EXTENSION: $8${NC}"
 echo -e "${BLUE}FILE_PATH: $9${NC}"
+echo -e "${BLUE}EXCLUDE: ${10}${NC}"
 
 handle_dirs () {
 
@@ -55,6 +59,7 @@ handle_dirs () {
    do
       if [ ! -d "${DIRLIST[index]}" ]; then
          echo -e "${RED}ERROR [✖] Can't find the directory: ${YELLOW}${DIRLIST[index]}${NC}"
+         echo -e "${RED}Check folder-path variable!"
          exit 2
       fi
       COMMAND_DIRS+=("${DIRLIST[index]}")
@@ -71,6 +76,7 @@ handle_files () {
    do
       if [ ! -f "${FILELIST[index]}" ]; then
          echo -e "${RED}ERROR [✖] Can't find the file: ${YELLOW}${FILELIST[index]}${NC}"
+         echo -e "${RED}Check file-path variable!"
          exit 2
       fi
       if [ $index == 0 ]; then
@@ -80,6 +86,16 @@ handle_files () {
       fi
    done
    FILES="${COMMAND_FILES[*]}"
+
+}
+
+handle_excluded () {
+
+   if [ -n "${EXCLUDE}" ]; then
+      EXCLUDED_FILES_DIRS=$(echo $EXCLUDE | sed -r 's/[,]+/ -E/g')
+   else
+      EXCLUDED_FILES_DIRS=".git"
+   fi
 
 }
 
@@ -125,9 +141,9 @@ check_additional_files () {
 
    if [ -n "$FILES" ]; then
       if [ "$MAX_DEPTH" -ne -1 ]; then
-         FIND_CALL=('fd' '--type' 'f' '-p' '('"${FILES// /}"')' '--max-depth' "${MAX_DEPTH}" '.' '--exec' 'markdown-link-check')
+         FIND_CALL=('fd' '--type' 'f' '-p' '('"${FILES// /}"')' '--max-depth' "${MAX_DEPTH}" '.' '-E' "${EXCLUDED_FILES_DIRS}" '--exec' 'markdown-link-check')
       else
-         FIND_CALL=('fd' '--type' 'f' '-p' '('"${FILES// /}"')' '.' '--exec' 'markdown-link-check')
+         FIND_CALL=('fd' '--type' 'f' '-p' '('"${FILES// /}"')' '.' '-E' "${EXCLUDED_FILES_DIRS}" '--exec' 'markdown-link-check')
       fi
 
       add_options
@@ -141,6 +157,8 @@ check_additional_files () {
    fi
 
 }
+
+handle_excluded
 
 if [ -z "$8" ]; then
    FOLDERS="."
@@ -176,15 +194,15 @@ if [ "$CHECK_MODIFIED_FILES" = "yes" ]; then
       done
 
    check_additional_files
-   
+
    check_errors
 
 else
 
    if [ "$5" -ne -1 ]; then
-      FIND_CALL=('fd' '.' ${FOLDERS} '-e' "${FILE_EXTENSION}" '--max-depth' "${MAX_DEPTH}" '--exec' 'markdown-link-check')
+      FIND_CALL=('fd' '.' ${FOLDERS} '-e' "${FILE_EXTENSION}" '--max-depth' "${MAX_DEPTH}" '-E' ${EXCLUDED_FILES_DIRS} '--exec' 'markdown-link-check')
    else
-      FIND_CALL=('fd' '.' ${FOLDERS} '-e' "${FILE_EXTENSION}" '--exec' 'markdown-link-check')
+      FIND_CALL=('fd' '.' ${FOLDERS} '-e' "${FILE_EXTENSION}" '-E' ${EXCLUDED_FILES_DIRS} '--exec' 'markdown-link-check')
    fi
 
    add_options
