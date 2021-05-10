@@ -26,14 +26,14 @@ Following is a list of some of the repositories which are using GitHub Action -
 Markdown link check.
 
 1. [netdata](https://github.com/netdata/netdata/blob/master/.github/workflows/docs.yml) ![](https://img.shields.io/github/stars/netdata/netdata?style=social)
-1. [GoogleChrome/lighthouse](https://github.com/GoogleChrome/lighthouse/blob/master/.github/workflows/check-md-links.yml)
+1. [GoogleChrome/lighthouse (Weekly cron job)](https://github.com/GoogleChrome/lighthouse/blob/master/.github/workflows/cron-weekly.yml)
    ![](https://img.shields.io/github/stars/GoogleChrome/lighthouse?style=social)
 1. [hashicorp/packer](https://github.com/hashicorp/packer/blob/master/.github/workflows/linkchecker.yml)
    ![](https://img.shields.io/github/stars/hashicorp/packer?style=social)
 1. [prometheus-operator](https://github.com/prometheus-operator/prometheus-operator/blob/master/.github/workflows/ci.yaml#L29)
    ![](https://img.shields.io/github/stars/prometheus-operator/prometheus-operator?style=social)
-1. [apache/apisix](https://github.com/apache/apisix/blob/master/.github/workflows/markdown-link-checker.yml)
-   ![](https://img.shields.io/github/stars/apache/apisix?style=social)
+1. [tendermint/tendermint](https://github.com/tendermint/tendermint/blob/master/.github/workflows/linkchecker.yml)
+   ![](https://img.shields.io/github/stars/tendermint/tendermint?style=social)
    
 If you are using this on production, consider [buying me a coffee](https://selz.co/GAAGAc7) ☕.
 
