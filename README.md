@@ -34,6 +34,8 @@ Markdown link check.
    ![](https://img.shields.io/github/stars/prometheus-operator/prometheus-operator?style=social)
 1. [tendermint/tendermint](https://github.com/tendermint/tendermint/blob/master/.github/workflows/linkchecker.yml)
    ![](https://img.shields.io/github/stars/tendermint/tendermint?style=social)
+1. [pyroscope-io/pyroscope](https://github.com/pyroscope-io/pyroscope/blob/main/.github/workflows/lint-markdown.yml)
+   ![](https://img.shields.io/github/stars/pyroscope-io/pyroscope?style=social)
    
 If you are using this on production, consider [buying me a coffee](https://selz.co/GAAGAc7) ☕.
 
