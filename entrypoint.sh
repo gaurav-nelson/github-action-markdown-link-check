@@ -87,17 +87,17 @@ check_errors () {
 
    if [ -e error.txt ] ; then
       if grep -q "ERROR:" error.txt; then
-         echo -e "${YELLOW}=========================> MARKDOWN LINK CHECK <=========================${NC}"
+         echo "::group::Markdown link check"
          cat error.txt
          printf "\n"
-         echo -e "${YELLOW}=========================================================================${NC}"
+         echo "::endgroup::"
          exit 113
       else
-         echo -e "${YELLOW}=========================> MARKDOWN LINK CHECK <=========================${NC}"
+         echo "::group::Markdown link check"
          printf "\n"
          echo -e "${GREEN}[✔] All links are good!${NC}"
          printf "\n"
-         echo -e "${YELLOW}=========================================================================${NC}"
+         echo "::endgroup::"
       fi
    else
       echo -e "${GREEN}All good!${NC}"
