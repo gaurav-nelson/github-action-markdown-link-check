@@ -30,7 +30,7 @@ Markdown link check.
    ![](https://img.shields.io/github/stars/GoogleChrome/lighthouse?style=social)
 1. [hashicorp/packer](https://github.com/hashicorp/packer/blob/master/.github/workflows/linkchecker.yml)
    ![](https://img.shields.io/github/stars/hashicorp/packer?style=social)
-1. [prometheus-operator](https://github.com/prometheus-operator/prometheus-operator/blob/master/.github/workflows/ci.yaml#L29)
+1. [prometheus-operator](https://github.com/prometheus-operator/prometheus-operator/blob/master/.github/workflows/checks.yaml)
    ![](https://img.shields.io/github/stars/prometheus-operator/prometheus-operator?style=social)
 1. [tendermint/tendermint](https://github.com/tendermint/tendermint/blob/master/.github/workflows/linkchecker.yml)
    ![](https://img.shields.io/github/stars/tendermint/tendermint?style=social)
