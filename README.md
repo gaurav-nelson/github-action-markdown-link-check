@@ -37,7 +37,7 @@ Markdown link check.
 1. [pyroscope-io/pyroscope](https://github.com/pyroscope-io/pyroscope/blob/main/.github/workflows/lint-markdown.yml)
    ![](https://img.shields.io/github/stars/pyroscope-io/pyroscope?style=social)
    
-If you are using this on production, consider [buying me a coffee](https://selz.co/GAAGAc7) ☕.
+If you are using this on production, consider [buying me a coffee](https://ko-fi.com/gauravnelson) ☕.
 
 ## Configuration
 
@@ -209,7 +209,7 @@ GitHub Action - Markdown link check follows the [GitHub recommended versioning s
    
 <hr>
 <p align="center">
- <a name="coffee" href="https://selz.co/GAAGAc7">
+ <a name="coffee" href="https://ko-fi.com/gauravnelson">
   <img src="https://i.imgur.com/1Q1YoHz.gif" alt="Buy me a coffee.">
  </a>
 </p>
