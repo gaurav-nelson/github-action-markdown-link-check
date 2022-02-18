@@ -2,7 +2,7 @@ name: 'markdown-link-check'
 description: 'Check if all links are valid in markdown files.'
 author: 'Gaurav Nelson'
 branding:
-  icon: 'link'  
+  icon: 'link'
   color: 'green'
 inputs:
   use-quiet-mode:
@@ -44,6 +44,10 @@ inputs:
     description: 'Specify additional files you want to check'
     required: true
     default: ''
+  exclude:
+    description: 'Specify directories and files you want to skip.'
+    required: true
+    default: ''
 
 runs:
   using: 'docker'
@@ -58,3 +62,4 @@ runs:
     - ${{ inputs.base-branch }}
     - ${{ inputs.file-extension }}
     - ${{ inputs.file-path }}
+    - ${{ inputs.exclude }}
