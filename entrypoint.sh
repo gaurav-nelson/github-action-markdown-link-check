@@ -8,7 +8,7 @@ YELLOW='\033[0;33m'
 BLUE='\033[0;34m'
 RED='\033[0;31m'
 
-npm i -g markdown-link-check@3.8.7
+npm i -g markdown-link-check@3.10.2
 echo "::group::Debug information"
 npm -g list --depth=1
 echo "::endgroup::"
