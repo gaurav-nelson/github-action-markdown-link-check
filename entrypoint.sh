@@ -155,7 +155,9 @@ fi
 if [ "$CHECK_MODIFIED_FILES" = "yes" ]; then
 
    echo -e "${BLUE}BASE_BRANCH: $7${NC}"
-
+   
+   git config --global --add safe.directory $(pwd)
+   
    git fetch origin "${BASE_BRANCH}" --depth=1 > /dev/null
    MASTER_HASH=$(git rev-parse origin/"${BASE_BRANCH}")
 
