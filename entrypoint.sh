@@ -142,7 +142,7 @@ check_additional_files () {
 
 }
 
-if [ -z "$8" ]; then
+if [ -z "$4" ]; then
    FOLDERS="."
 else
    handle_dirs
@@ -169,16 +169,23 @@ if [ "$CHECK_MODIFIED_FILES" = "yes" ]; then
 
    for i in "${FILE_ARRAY[@]}"
       do
+         echo "------------------------------> filename is ${i}"
          if [ "${i##*.}" == "${FILE_EXTENSION#.}" ]; then
-            FIND_CALL+=("${i}")
-            COMMAND="${FIND_CALL[*]}"
-            $COMMAND &>> error.txt || true
-            unset 'FIND_CALL[${#FIND_CALL[@]}-1]'
+            echo "------------------------------> File extension match"
+            echo "------------------------------> filename: ${i##*/}"
+            if [ $(find ${FOLDERS} -name "${i##*/}" ) ]; then
+               echo "------------------------------> folders is ${FOLDERS}"
+               FIND_CALL+=("${i}")
+               COMMAND="${FIND_CALL[*]}"
+               echo "------------------------------> Command is ${COMMAND}"
+               $COMMAND &>> error.txt || true
+               unset 'FIND_CALL[${#FIND_CALL[@]}-1]'
+            fi
          fi
       done
 
    check_additional_files
-   
+
    check_errors
 
 else

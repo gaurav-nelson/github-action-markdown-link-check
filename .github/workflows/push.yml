@@ -17,8 +17,10 @@ jobs:
       uses: ./
       with:
         # Add a test to restrict the test to just dir4 and dir5.
-        folder-path: './md/dir4, ./md/dir5'
-        file-path: './md/AdditionalFileTest1.md, ./md/AdditionalFileTest2.md'
+        folder-path: 'md/dir4/, md/dir5/'
+        file-path: 'md/AdditionalFileTest1.md, md/AdditionalFileTest2.md'
+        check-modified-files-only: 'yes'
+        use-verbose-mode: 'yes'
   shellcheck:
     runs-on: [ubuntu-latest]
     steps:
