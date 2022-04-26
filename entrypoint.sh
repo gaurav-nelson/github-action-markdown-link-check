@@ -8,12 +8,15 @@ YELLOW='\033[0;33m'
 BLUE='\033[0;34m'
 RED='\033[0;31m'
 
+echo "::group::Install markdown-link-check"
 npm i -g markdown-link-check@3.8.7
+echo "::endgroup::"
 
 declare -a FIND_CALL
 declare -a COMMAND_DIRS COMMAND_FILES
 declare -a COMMAND_FILES
 
+echo "::group::Configuration"
 USE_QUIET_MODE="$1"
 USE_VERBOSE_MODE="$2"
 CONFIG_FILE="$3"
@@ -46,6 +49,7 @@ echo -e "${BLUE}MAX_DEPTH: $5${NC}"
 echo -e "${BLUE}CHECK_MODIFIED_FILES: $6${NC}"
 echo -e "${BLUE}FILE_EXTENSION: $8${NC}"
 echo -e "${BLUE}FILE_PATH: $9${NC}"
+echo "::endgroup::"
 
 handle_dirs () {
 
@@ -134,9 +138,11 @@ check_additional_files () {
 
       FIND_CALL+=(';')
 
+      echo "::group::Command (Additional files)"
       set -x
       "${FIND_CALL[@]}" &>> error.txt
       set +x
+      echo "::endgroup::"
 
    fi
 
@@ -178,7 +184,7 @@ if [ "$CHECK_MODIFIED_FILES" = "yes" ]; then
       done
 
    check_additional_files
-   
+
    check_errors
 
 else
@@ -193,9 +199,11 @@ else
 
    FIND_CALL+=(';')
 
+   echo "::group::Command"
    set -x
    "${FIND_CALL[@]}" &>> error.txt
    set +x
+   echo "::endgroup::"
 
    check_additional_files
 
