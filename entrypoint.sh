@@ -9,6 +9,9 @@ BLUE='\033[0;34m'
 RED='\033[0;31m'
 
 npm i -g markdown-link-check@3.8.7
+echo "::group::Debug information"
+npm -g list --depth=1
+echo "::endgroup::"
 
 declare -a FIND_CALL
 declare -a COMMAND_DIRS COMMAND_FILES
@@ -155,9 +158,9 @@ fi
 if [ "$CHECK_MODIFIED_FILES" = "yes" ]; then
 
    echo -e "${BLUE}BASE_BRANCH: $7${NC}"
-   
+
    git config --global --add safe.directory $(pwd)
-   
+
    git fetch origin "${BASE_BRANCH}" --depth=1 > /dev/null
    MASTER_HASH=$(git rev-parse origin/"${BASE_BRANCH}")
 
@@ -178,7 +181,7 @@ if [ "$CHECK_MODIFIED_FILES" = "yes" ]; then
       done
 
    check_additional_files
-   
+
    check_errors
 
 else
