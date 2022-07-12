@@ -28,8 +28,6 @@ Markdown link check.
 1. [netdata](https://github.com/netdata/netdata/blob/master/.github/workflows/docs.yml) ![](https://img.shields.io/github/stars/netdata/netdata?style=social)
 1. [GoogleChrome/lighthouse (Weekly cron job)](https://github.com/GoogleChrome/lighthouse/blob/master/.github/workflows/cron-weekly.yml)
    ![](https://img.shields.io/github/stars/GoogleChrome/lighthouse?style=social)
-1. [prometheus-operator](https://github.com/prometheus-operator/prometheus-operator/blob/master/.github/workflows/checks.yaml)
-   ![](https://img.shields.io/github/stars/prometheus-operator/prometheus-operator?style=social)
 1. [tendermint/tendermint](https://github.com/tendermint/tendermint/blob/master/.github/workflows/markdown-links.yml)
    ![](https://img.shields.io/github/stars/tendermint/tendermint?style=social)
 1. [pyroscope-io/pyroscope](https://github.com/pyroscope-io/pyroscope/blob/main/.github/workflows/lint-markdown.yml)
