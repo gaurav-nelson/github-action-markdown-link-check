@@ -32,7 +32,7 @@ Markdown link check.
    ![](https://img.shields.io/github/stars/hashicorp/packer?style=social)
 1. [prometheus-operator](https://github.com/prometheus-operator/prometheus-operator/blob/master/.github/workflows/checks.yaml)
    ![](https://img.shields.io/github/stars/prometheus-operator/prometheus-operator?style=social)
-1. [tendermint/tendermint](https://github.com/tendermint/tendermint/blob/master/.github/workflows/linkchecker.yml)
+1. [tendermint/tendermint](https://github.com/tendermint/tendermint/blob/master/.github/workflows/markdown-links.yml)
    ![](https://img.shields.io/github/stars/tendermint/tendermint?style=social)
 1. [pyroscope-io/pyroscope](https://github.com/pyroscope-io/pyroscope/blob/main/.github/workflows/lint-markdown.yml)
    ![](https://img.shields.io/github/stars/pyroscope-io/pyroscope?style=social)
