@@ -187,6 +187,38 @@ Or mark 429 status code as alive:
 }
 ```
 
+## Example Usage
+
+Consider a workflow file that checks for the status of hyperlinks on push to the master branch, 
+
+``` yml
+name: Check .md links
+
+on:
+  push: [master]
+  
+jobs:
+  markdown-link-check:
+    runs-on: ubuntu-latest
+    # check out the latest version of the code
+    steps:
+    - uses: actions/checkout@v3
+
+    # Checks the status of hyperlinks in .md files in verbose mode
+    - name: Check links
+      uses: gaurav-nelson/github-action-markdown-link-check@v1
+      with:
+        use-verbose-mode: 'yes'
+```
+A file `test.md` exists, containing
+
+![image](https://user-images.githubusercontent.com/53875297/159135478-87194037-f3d6-4ca9-9da8-f01dac482fbc.png)
+
+On running the workflow described above, the output shown below is obtained
+
+![image](https://user-images.githubusercontent.com/53875297/159135426-9f439d39-8bb3-40f0-9255-9efe2b493c1a.png)
+
+
 ## Versioning
 GitHub Action - Markdown link check follows the [GitHub recommended versioning strategy](https://github.com/actions/toolkit/blob/master/docs/action-versioning.md). 
 
