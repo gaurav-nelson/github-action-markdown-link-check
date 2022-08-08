@@ -9,9 +9,9 @@ This GitHub action checks all Markdown files in your repository for broken links
 
    ```yml
    name: Check Markdown links
-   
+
    on: push
-   
+
    jobs:
      markdown-link-check:
        runs-on: ubuntu-latest
@@ -32,7 +32,7 @@ Markdown link check.
    ![](https://img.shields.io/github/stars/tendermint/tendermint?style=social)
 1. [pyroscope-io/pyroscope](https://github.com/pyroscope-io/pyroscope/blob/main/.github/workflows/lint-markdown.yml)
    ![](https://img.shields.io/github/stars/pyroscope-io/pyroscope?style=social)
-   
+
 If you are using this on production, consider [buying me a coffee](https://ko-fi.com/gauravnelson) ☕.
 
 ## Configuration
@@ -42,6 +42,7 @@ If you are using this on production, consider [buying me a coffee](https://ko-fi
 - [Disable check for some links](#disable-check-for-some-links)
 - [Check only modified files in a pull request](#check-only-modified-files-in-a-pull-request)
 - [Status code 429: Too many requests](#too-many-requests)
+- [GitHub links failure fix](#github-links-failure-fix)
 
 ### Custom variables
 You customize the action by using the following variables:
@@ -90,7 +91,7 @@ for more details.
 ```yml
 name: Check Markdown links
 
-on: 
+on:
   push:
     branches:
     - master
@@ -121,7 +122,7 @@ checking for certain links in a markdown document.
      ```md
      <!-- markdown-link-check-disable -->
      ## Section
-     
+
      Disbale link checking in this section. Ignore this [Bad Link](https://exampleexample.cox)
      <!-- markdown-link-check-enable -->
      ```
@@ -132,7 +133,7 @@ checking for certain links in a markdown document.
 ### Check only modified files in a pull request
 
 Use the following workflow to only check links in modified markdown files in a
-pull request. 
+pull request.
 
 When
 you use this variable, the action finds modififed files between two commits:
@@ -187,16 +188,32 @@ Or mark 429 status code as alive:
 }
 ```
 
+### GitHub links failure fix
+Use the folliwng `httpHeaders` in your custom configuration file to fix GitHub links failure.
+
+```json
+{
+  "httpHeaders": [
+    {
+      "urls": ["https://github.com/", "https://guides.github.com/", "https://help.github.com/", "https://docs.github.com/"],
+      "headers": {
+        "Accept-Encoding": "zstd, br, gzip, deflate"
+      }
+    }
+  ]
+}
+```
+
 ## Example Usage
 
-Consider a workflow file that checks for the status of hyperlinks on push to the master branch, 
+Consider a workflow file that checks for the status of hyperlinks on push to the master branch,
 
 ``` yml
 name: Check .md links
 
 on:
   push: [master]
-  
+
 jobs:
   markdown-link-check:
     runs-on: ubuntu-latest
@@ -220,7 +237,7 @@ On running the workflow described above, the output shown below is obtained
 
 
 ## Versioning
-GitHub Action - Markdown link check follows the [GitHub recommended versioning strategy](https://github.com/actions/toolkit/blob/master/docs/action-versioning.md). 
+GitHub Action - Markdown link check follows the [GitHub recommended versioning strategy](https://github.com/actions/toolkit/blob/master/docs/action-versioning.md).
 
 1. To use a specific released version of the action ([Releases](https://github.com/gaurav-nelson/github-action-markdown-link-check/releases)):
    ```yml
@@ -234,7 +251,7 @@ GitHub Action - Markdown link check follows the [GitHub recommended versioning s
    ```yml
    - uses: gaurav-nelson/github-action-markdown-link-check@44a942b2f7ed0dc101d556f281e906fb79f1f478
    ```
-   
+
 <hr>
 <p align="center">
  <a name="coffee" href="https://ko-fi.com/gauravnelson">
