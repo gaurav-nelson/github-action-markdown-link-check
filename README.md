@@ -123,7 +123,7 @@ checking for certain links in a markdown document.
      <!-- markdown-link-check-disable -->
      ## Section
 
-     Disbale link checking in this section. Ignore this [Bad Link](https://exampleexample.cox)
+     Disable link checking in this section. Ignore this [Bad Link](https://exampleexample.cox)
      <!-- markdown-link-check-enable -->
      ```
 2. `<!-- markdown-link-check-disable-next-line -->` Use this comment to disable link checking for the next line.
