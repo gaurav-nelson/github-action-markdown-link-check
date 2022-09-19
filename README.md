@@ -37,12 +37,21 @@ If you are using this on production, consider [buying me a coffee](https://ko-fi
 
 ## Configuration
 
-- [Custom variables](#custom-variables)
-- [Scheduled runs](#scheduled-runs)
-- [Disable check for some links](#disable-check-for-some-links)
-- [Check only modified files in a pull request](#check-only-modified-files-in-a-pull-request)
-- [Status code 429: Too many requests](#too-many-requests)
-- [GitHub links failure fix](#github-links-failure-fix)
+- [GitHub Action - Markdown link check 🔗✔️](#github-action---markdown-link-check-️)
+  - [How to use](#how-to-use)
+    - [Real-life usage samples](#real-life-usage-samples)
+  - [Configuration](#configuration)
+    - [Custom variables](#custom-variables)
+      - [Sample workflow with variables](#sample-workflow-with-variables)
+    - [Scheduled runs](#scheduled-runs)
+      - [Sample workflow with scheduled job](#sample-workflow-with-scheduled-job)
+    - [Disable check for some links](#disable-check-for-some-links)
+    - [Check only modified files in a pull request](#check-only-modified-files-in-a-pull-request)
+    - [Check multiple directories and files](#check-multiple-directories-and-files)
+    - [Too many requests](#too-many-requests)
+    - [GitHub links failure fix](#github-links-failure-fix)
+  - [Example Usage](#example-usage)
+  - [Versioning](#versioning)
 
 ### Custom variables
 You customize the action by using the following variables:
@@ -81,10 +90,9 @@ jobs:
 ```
 
 ### Scheduled runs
-In addition to checking links on every push, or pull requests, its also a good
-hygine to check for broken links regularly as well. See
-[Workflow syntax for GitHub Actions - on.schedule](https://help.github.com/en/actions/reference/workflow-syntax-for-github-actions#onschedule)
-for more details.
+
+In addition to checking links on every push, or pull requests, its also a good hygiene to check for broken links regularly as well.
+See [Workflow syntax for GitHub Actions - on.schedule](https://help.github.com/en/actions/reference/workflow-syntax-for-github-actions#onschedule) for more details.
 
 #### Sample workflow with scheduled job
 
@@ -113,6 +121,7 @@ jobs:
 ```
 
 ### Disable check for some links
+
 You can include the following HTML comments into your markdown files to disable
 checking for certain links in a markdown document.
 
@@ -132,17 +141,14 @@ checking for certain links in a markdown document.
 
 ### Check only modified files in a pull request
 
-Use the following workflow to only check links in modified markdown files in a
-pull request.
+Use the following workflow to only check links in modified markdown files in a pull request.
 
-When
-you use this variable, the action finds modififed files between two commits:
+When you use this variable, the action finds modified files between two commits:
+
 - latest commit in you PR
-- latest commit in the `master` branch. If you are suing a different branch to
-  merge PRs, specify the branch using `base-branch`.
+- latest commit in the `master` branch. If you are suing a different branch to merge PRs, specify the branch using `base-branch`.
 
-> **NOTE**: We can also use GitHub API to get all modified files in a PR, but that
-> would require tokens and stuff, create an issue or PR if you need that.
+> **NOTE**: We can also use GitHub API to get all modified files in a PR, but that would require tokens and stuff, create an issue or PR if you need that.
 
 ```yml
 on: [pull_request]
@@ -178,10 +184,12 @@ jobs:
 ```
 
 ### Too many requests
+
 Use `retryOn429`, `retry-after`, `retryCount`, and `fallbackRetryDelay` in your custom configuration file.
-See https://github.com/tcort/markdown-link-check#config-file-format for details.
+See <https://github.com/tcort/markdown-link-check#config-file-format> for details.
 
 Or mark 429 status code as alive:
+
 ```json
 {
   "aliveStatusCodes": [429, 200]
@@ -189,6 +197,7 @@ Or mark 429 status code as alive:
 ```
 
 ### GitHub links failure fix
+
 Use the folliwng `httpHeaders` in your custom configuration file to fix GitHub links failure.
 
 ```json
@@ -227,6 +236,7 @@ jobs:
       with:
         use-verbose-mode: 'yes'
 ```
+
 A file `test.md` exists, containing
 
 ![image](https://user-images.githubusercontent.com/53875297/159135478-87194037-f3d6-4ca9-9da8-f01dac482fbc.png)
@@ -235,8 +245,8 @@ On running the workflow described above, the output shown below is obtained
 
 ![image](https://user-images.githubusercontent.com/53875297/159135426-9f439d39-8bb3-40f0-9255-9efe2b493c1a.png)
 
-
 ## Versioning
+
 GitHub Action - Markdown link check follows the [GitHub recommended versioning strategy](https://github.com/actions/toolkit/blob/master/docs/action-versioning.md).
 
 1. To use a specific released version of the action ([Releases](https://github.com/gaurav-nelson/github-action-markdown-link-check/releases)):
