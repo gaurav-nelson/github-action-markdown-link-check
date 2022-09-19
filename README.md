@@ -122,8 +122,7 @@ jobs:
 
 ### Disable check for some links
 
-You can include the following HTML comments into your markdown files to disable
-checking for certain links in a markdown document.
+You can include the following HTML comments into your markdown files to disable checking for certain links in a markdown document.
 
 1. `<!-- markdown-link-check-disable -->` and `<!-- markdown-link-check-enable-->`: Use these to disable links for all links appearing between these
     comments.
@@ -132,7 +131,7 @@ checking for certain links in a markdown document.
      <!-- markdown-link-check-disable -->
      ## Section
 
-     Disbale link checking in this section. Ignore this [Bad Link](https://exampleexample.cox)
+     Disable link checking in this section. Ignore this [Bad Link](https://exampleexample.cox)
      <!-- markdown-link-check-enable -->
      ```
 2. `<!-- markdown-link-check-disable-next-line -->` Use this comment to disable link checking for the next line.
