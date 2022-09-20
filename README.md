@@ -37,21 +37,6 @@ If you are using this on production, consider [buying me a coffee](https://ko-fi
 
 ## Configuration
 
-- [GitHub Action - Markdown link check 🔗✔️](#github-action---markdown-link-check-️)
-  - [How to use](#how-to-use)
-    - [Real-life usage samples](#real-life-usage-samples)
-  - [Configuration](#configuration)
-    - [Custom variables](#custom-variables)
-      - [Sample workflow with variables](#sample-workflow-with-variables)
-    - [Scheduled runs](#scheduled-runs)
-      - [Sample workflow with scheduled job](#sample-workflow-with-scheduled-job)
-    - [Disable check for some links](#disable-check-for-some-links)
-    - [Check only modified files in a pull request](#check-only-modified-files-in-a-pull-request)
-    - [Check multiple directories and files](#check-multiple-directories-and-files)
-    - [Too many requests](#too-many-requests)
-    - [GitHub links failure fix](#github-links-failure-fix)
-  - [Example Usage](#example-usage)
-  - [Versioning](#versioning)
 
 ### Custom variables
 You customize the action by using the following variables:
