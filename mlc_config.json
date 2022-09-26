@@ -1,7 +1,11 @@
 {
-    "ignorePatterns": [
-        {
-            "pattern": "^http://ignored-domain.com"
-        }
-    ]
+  "ignorePatterns": [
+    {
+      "pattern": [
+        "^http://ignored-domain.com",
+        "^https://ko-fi.com/gauravnelson",
+        "^https://help.github.com/en/actions/reference/workflow-syntax-for-github-actions#onschedule"
+      ]
+    }
+  ]
 }
