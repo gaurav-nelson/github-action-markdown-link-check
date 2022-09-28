@@ -47,12 +47,12 @@ runs:
   image: "Dockerfile"
   entrypoint: entrypoint.sh
   args:
-    - --quiet ${{ inputs.use-quiet-mode }}
-    - --verbose ${{ inputs.use-verbose-mode }}
-    - --config ${{ inputs.config-file }}
-    - --folder ${{ inputs.folder-path }}
-    - --depth ${{ inputs.max-depth }}
-    - --modified ${{ inputs.check-modified-files-only }}
-    - --branch ${{ inputs.base-branch }}
-    - --ext ${{ inputs.file-extension }}
-    - --path ${{ inputs.file-path }}
+    - --quiet ${{ inputs.use-quiet-mode || 'false' }}
+    - --verbose ${{ inputs.use-verbose-mode || 'false' }}
+    - --config ${{ inputs.config-file || 'mlc_config.json' }}
+    - --folder ${{ inputs.folder-path || '.' }}
+    - --depth ${{ inputs.max-depth || '-1' }}
+    - --modified ${{ inputs.check-modified-files-only || 'false' }}
+    - --branch ${{ inputs.base-branch || 'master' }}
+    - --ext ${{ inputs.file-extension || '.md' }}
+    - --path ${{ inputs.file-path || '' }}
