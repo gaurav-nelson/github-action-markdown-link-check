@@ -1,13 +1,10 @@
 {
   "ignorePatterns": [
     {
-      "pattern": [
-        "^http://ignored-domain.com",
-        "^https://ko-fi.com"
-      ]
+      "pattern": ["^http://ignored-domain.com", "^https://ko-fi.com"]
     }
   ],
-   "httpHeaders": [
+  "httpHeaders": [
     {
       "urls": ["https://docs.github.com/"],
       "headers": {
@@ -16,4 +13,3 @@
     }
   ]
 }
-

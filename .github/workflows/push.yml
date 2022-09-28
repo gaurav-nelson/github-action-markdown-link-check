@@ -4,22 +4,22 @@ jobs:
   markdown-link-check:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@master
-    - name: markdown-link-check
-      uses: ./
-      with:
-        check-modified-files-only: 'yes'
+      - uses: actions/checkout@master
+      - name: markdown-link-check
+        uses: ./
+        with:
+          check-modified-files-only: true
   markdown-link-check-folders:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@master
-    - name: markdown-link-check
-      uses: ./
-      with:
-        # Add a test to restrict the test to just dir4 and dir5.
-        folder-path: './md/dir4, ./md/dir5'
-        file-path: './md/AdditionalFileTest1.md, ./md/AdditionalFileTest2.md'
+      - uses: actions/checkout@master
+      - name: markdown-link-check
+        uses: ./
+        with:
+          # Add a test to restrict the test to just dir4 and dir5.
+          folder-path: "./md/dir4, ./md/dir5"
+          file-path: "./md/AdditionalFileTest1.md, ./md/AdditionalFileTest2.md"
   shellcheck:
     runs-on: [ubuntu-latest]
     steps:
-      - uses: 'bewuethr/shellcheck-action@v2'
+      - uses: "bewuethr/shellcheck-action@v2"

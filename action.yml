@@ -1,57 +1,58 @@
-name: 'markdown-link-check'
-description: 'Check if all links are valid in markdown files.'
-author: 'Gaurav Nelson'
+name: "markdown-link-check"
+description: "Check if all links are valid in markdown files."
+author: "Gaurav Nelson"
 branding:
-  icon: 'link'
-  color: 'green'
+  icon: "link"
+  color: "green"
 inputs:
   use-quiet-mode:
-    description: 'Use yes to enable markdown-link-check quiet mode which only list errors.'
+    description: "Use true to enable markdown-link-check quiet mode which only list errors."
     required: false
-    default: 'no'
+    default: "false"
   use-verbose-mode:
-    description: 'Use yes to enable markdown-link-check verbose mode which lists additional details.'
+    description: "Use true to enable markdown-link-check verbose mode which lists additional details."
     required: false
-    default: 'no'
+    default: "false"
   config-file:
-    description: 'Specify path to a markdown-link-check JSON configuration file.'
+    description: "Specify path to a markdown-link-check JSON configuration file."
     required: false
-    default: 'mlc_config.json'
+    default: "mlc_config.json"
   folder-path:
-    description: 'Specify path to a custom folder where your markdown files are located.'
+    description: "Specify path to a custom folder where your markdown files are located."
     required: false
-    default: '.'
+    default: "."
   max-depth:
-    description: 'Specify a max-depth of directories you want to search for markdown files.'
+    description: "Specify a max-depth of directories you want to search for markdown files."
     required: false
-    default: '-1'
+    default: "-1"
   check-modified-files-only:
-    description: 'Use yes to only check for modified markdown files instead of checking all markdown files.'
+    description: "Use true to only check for modified markdown files instead of checking all markdown files."
     required: false
-    default: 'no'
+    default: "false"
   base-branch:
-    description: 'Use this to specify the base branch against which the action finds the modified files.'
+    description: "Use this to specify the base branch against which the action finds the modified files."
     required: false
-    default: 'master'
+    default: "master"
   file-extension:
-    description: 'Use this to specify the file extension of Markdown files.'
+    description: "Use this to specify the file extension of Markdown files."
     required: false
-    default: '.md'
+    default: ".md"
   file-path:
-    description: 'Specify additional files you want to check'
+    description: "Specify additional files you want to check"
     required: false
-    default: ''
+    default: ""
 
 runs:
-  using: 'docker'
-  image: 'Dockerfile'
+  using: "docker"
+  image: "Dockerfile"
+  entrypoint: entrypoint.sh
   args:
-    - ${{ inputs.use-quiet-mode }}
-    - ${{ inputs.use-verbose-mode }}
-    - ${{ inputs.config-file }}
-    - ${{ inputs.folder-path }}
-    - ${{ inputs.max-depth }}
-    - ${{ inputs.check-modified-files-only }}
-    - ${{ inputs.base-branch }}
-    - ${{ inputs.file-extension }}
-    - ${{ inputs.file-path }}
+    - --quiet ${{ inputs.use-quiet-mode }}
+    - --verbose ${{ inputs.use-verbose-mode }}
+    - --config ${{ inputs.config-file }}
+    - --folder ${{ inputs.folder-path }}
+    - --depth ${{ inputs.max-depth }}
+    - --modified ${{ inputs.check-modified-files-only }}
+    - --branch ${{ inputs.base-branch }}
+    - --ext ${{ inputs.file-extension }}
+    - --path ${{ inputs.file-path }}
