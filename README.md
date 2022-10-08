@@ -189,7 +189,7 @@ Or mark 429 status code as alive:
 ```
 
 ### GitHub links failure fix
-Use the folliwng `httpHeaders` in your custom configuration file to fix GitHub links failure.
+Use the following `httpHeaders` in your custom configuration file to fix GitHub links failure.
 
 ```json
 {
