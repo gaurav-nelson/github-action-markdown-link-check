@@ -6,13 +6,11 @@ branding:
   color: 'green'
 inputs:
   use-quiet-mode:
-    description: 'Use yes to enable markdown-link-check quiet mode which only
-    list errors.'
+    description: 'Use yes to enable markdown-link-check quiet mode which only list errors.'
     required: true
     default: 'no'
   use-verbose-mode:
-    description: 'Use yes to enable markdown-link-check verbose mode which lists
-    additional details.'
+    description: 'Use yes to enable markdown-link-check verbose mode which lists additional details.'
     required: true
     default: 'no'
   config-file:
@@ -32,8 +30,7 @@ inputs:
     required: true
     default: 'no'
   base-branch:
-    description: 'Use this to specify the base branch against which the action
-    finds the modififed files.'
+    description: 'Use this to specify the base branch against which the action finds the modififed files.'
     required: true
     default: 'master'
   file-extension:
