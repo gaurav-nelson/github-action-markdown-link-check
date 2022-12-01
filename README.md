@@ -41,6 +41,7 @@ If you are using this on production, consider [buying me a coffee](https://ko-fi
 - [Scheduled runs](#scheduled-runs)
 - [Disable check for some links](#disable-check-for-some-links)
 - [Check only modified files in a pull request](#check-only-modified-files-in-a-pull-request)
+- [Check multiple directories and files](#check-multiple-directories-and-files)
 - [Status code 429: Too many requests](#too-many-requests)
 - [GitHub links failure fix](#github-links-failure-fix)
 
@@ -82,7 +83,7 @@ jobs:
 
 ### Scheduled runs
 In addition to checking links on every push, or pull requests, its also a good
-hygine to check for broken links regularly as well. See
+hygiene to check for broken links regularly as well. See
 [Workflow syntax for GitHub Actions - on.schedule](https://help.github.com/en/actions/reference/workflow-syntax-for-github-actions#onschedule)
 for more details.
 
@@ -136,7 +137,7 @@ Use the following workflow to only check links in modified markdown files in a
 pull request.
 
 When
-you use this variable, the action finds modififed files between two commits:
+you use this variable, the action finds modified files between two commits:
 - latest commit in you PR
 - latest commit in the `master` branch. If you are suing a different branch to
   merge PRs, specify the branch using `base-branch`.
