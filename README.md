@@ -136,7 +136,7 @@ Use the following workflow to only check links in modified markdown files in a
 pull request.
 
 When
-you use this variable, the action finds modififed files between two commits:
+you use this variable, the action finds modified files between two commits:
 - latest commit in you PR
 - latest commit in the `master` branch. If you are suing a different branch to
   merge PRs, specify the branch using `base-branch`.
