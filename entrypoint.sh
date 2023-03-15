@@ -17,19 +17,19 @@ declare -a FIND_CALL
 declare -a COMMAND_DIRS COMMAND_FILES
 declare -a COMMAND_FILES
 
-USE_QUIET_MODE="$1"
-USE_VERBOSE_MODE="$2"
-CONFIG_FILE="$3"
-FOLDER_PATH="$4"
-MAX_DEPTH="$5"
-CHECK_MODIFIED_FILES="$6"
-BASE_BRANCH="$7"
-if [ -z "$8" ]; then
+USE_QUIET_MODE="$INPUT_USE_QUIET_MODE"
+USE_VERBOSE_MODE="$INPUT_USE_VERBOSE_MODE"
+CONFIG_FILE="$INPUT_CONFIG_FILE"
+FOLDER_PATH="$INPUT_FOLDER_PATH"
+MAX_DEPTH="$INPUT_MAX_DEPTH"
+CHECK_MODIFIED_FILES="$INPUT_CHECK_MODIFIED_FILES_ONLY"
+BASE_BRANCH="$INPUT_BASE_BRANCH"
+if [ -z "$INPUT_FILE_EXTENSION" ]; then
    FILE_EXTENSION=".md"
 else
-   FILE_EXTENSION="$8"
+   FILE_EXTENSION="$INPUT_FILE_EXTENSION"
 fi
-FILE_PATH="$9"
+FILE_PATH="$INPUT_FILE_PATH"
 
 if [ -f "$CONFIG_FILE" ]; then
    echo -e "${BLUE}Using markdown-link-check configuration file: ${YELLOW}$CONFIG_FILE${NC}"
@@ -42,13 +42,13 @@ fi
 FOLDERS=""
 FILES=""
 
-echo -e "${BLUE}USE_QUIET_MODE: $1${NC}"
-echo -e "${BLUE}USE_VERBOSE_MODE: $2${NC}"
-echo -e "${BLUE}FOLDER_PATH: $4${NC}"
-echo -e "${BLUE}MAX_DEPTH: $5${NC}"
-echo -e "${BLUE}CHECK_MODIFIED_FILES: $6${NC}"
-echo -e "${BLUE}FILE_EXTENSION: $8${NC}"
-echo -e "${BLUE}FILE_PATH: $9${NC}"
+echo -e "${BLUE}USE_QUIET_MODE: $USE_QUIET_MODE${NC}"
+echo -e "${BLUE}USE_VERBOSE_MODE: $USE_VERBOSE_MODE${NC}"
+echo -e "${BLUE}FOLDER_PATH: $FOLDER_PATH${NC}"
+echo -e "${BLUE}MAX_DEPTH: $MAX_DEPTH${NC}"
+echo -e "${BLUE}CHECK_MODIFIED_FILES: $CHECK_MODIFIED_FILES${NC}"
+echo -e "${BLUE}FILE_EXTENSION: $FILE_EXTENSION${NC}"
+echo -e "${BLUE}FILE_PATH: $FILE_PATH${NC}"
 
 handle_dirs () {
 
@@ -145,19 +145,19 @@ check_additional_files () {
 
 }
 
-if [ -z "$8" ]; then
+if [ -z "$FILE_EXTENSION" ]; then
    FOLDERS="."
 else
    handle_dirs
 fi
 
-if [ -n "$9" ]; then
+if [ -n "$FILE_PATH" ]; then
    handle_files
 fi
 
 if [ "$CHECK_MODIFIED_FILES" = "yes" ]; then
 
-   echo -e "${BLUE}BASE_BRANCH: $7${NC}"
+   echo -e "${BLUE}BASE_BRANCH: $BASE_BRANCH${NC}"
 
    git config --global --add safe.directory '*'
 
@@ -187,7 +187,7 @@ if [ "$CHECK_MODIFIED_FILES" = "yes" ]; then
 
 else
 
-   if [ "$5" -ne -1 ]; then
+   if [ "$MAX_DEPTH" -ne -1 ]; then
       FIND_CALL=('find' ${FOLDERS} '-name' '*'"${FILE_EXTENSION}" '-not' '-path' './node_modules/*' '-maxdepth' "${MAX_DEPTH}" '-exec' 'markdown-link-check' '{}')
    else
       FIND_CALL=('find' ${FOLDERS} '-name' '*'"${FILE_EXTENSION}" '-not' '-path' './node_modules/*' '-exec' 'markdown-link-check' '{}')
