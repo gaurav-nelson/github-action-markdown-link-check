@@ -128,9 +128,9 @@ check_additional_files () {
 
    if [ -n "$FILES" ]; then
       if [ "$MAX_DEPTH" -ne -1 ]; then
-         FIND_CALL=('find' '.' '-type' 'f' '(' ${FILES} ')' '-not' '-path' './node_modules/*' '-maxdepth' "${MAX_DEPTH}" '-exec' 'markdown-link-check' '{}')
+         FIND_CALL=('find' ${FOLDERS} '-type' 'f' '(' ${FILES} ')' '-not' '-path' './node_modules/*' '-maxdepth' "${MAX_DEPTH}" '-exec' 'markdown-link-check' '{}')
       else
-         FIND_CALL=('find' '.' '-type' 'f' '(' ${FILES} ')' '-not' '-path' './node_modules/*' '-exec' 'markdown-link-check' '{}')
+         FIND_CALL=('find' ${FOLDERS} '-type' 'f' '(' ${FILES} ')' '-not' '-path' './node_modules/*' '-exec' 'markdown-link-check' '{}')
       fi
 
       add_options
@@ -163,6 +163,10 @@ if [ "$CHECK_MODIFIED_FILES" = "yes" ]; then
 
    git fetch origin "${BASE_BRANCH}" --depth=1 > /dev/null
    MASTER_HASH=$(git rev-parse origin/"${BASE_BRANCH}")
+
+   if [ -z "$FOLDERS" ]; then
+      FOLDERS="."
+   fi
 
    FIND_CALL=('markdown-link-check')
 
