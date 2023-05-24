@@ -13,9 +13,10 @@ echo "::group::Debug information"
 npm -g list --depth=1
 echo "::endgroup::"
 
-declare -a FIND_CALL
-declare -a COMMAND_DIRS COMMAND_FILES
-declare -a COMMAND_FILES
+declare -a COMMANDS
+declare -a FOLDERS
+declare -a EXCLUDE_DIRS
+declare -a EXCLUDE_FILES
 
 USE_QUIET_MODE="$1"
 USE_VERBOSE_MODE="$2"
@@ -30,6 +31,8 @@ else
    FILE_EXTENSION="$8"
 fi
 FILE_PATH="$9"
+EXCLUDE_FOLDERS="${10:-}"
+EXCLUDE_FILES="${11:-}"
 
 if [ -f "$CONFIG_FILE" ]; then
    echo -e "${BLUE}Using markdown-link-check configuration file: ${YELLOW}$CONFIG_FILE${NC}"
@@ -39,55 +42,73 @@ else
    echo -e "customizing markdown-link-check by using a configuration file.${NC}"
 fi
 
-FOLDERS=""
-FILES=""
+echo -e "${BLUE}USE_QUIET_MODE: $USE_QUIET_MODE${NC}"
+echo -e "${BLUE}USE_VERBOSE_MODE: $USE_VERBOSE_MODE${NC}"
+echo -e "${BLUE}FOLDER_PATH: $FOLDER_PATH${NC}"
+echo -e "${BLUE}MAX_DEPTH: $MAX_DEPTH${NC}"
+echo -e "${BLUE}CHECK_MODIFIED_FILES: $CHECK_MODIFIED_FILES${NC}"
+echo -e "${BLUE}FILE_EXTENSION: $FILE_EXTENSION${NC}"
+echo -e "${BLUE}FILE_PATH: $FILE_PATH${NC}"
+echo -e "${BLUE}EXCLUDE_FOLDERS: $EXCLUDE_FOLDERS${NC}"
+echo -e "${BLUE}EXCLUDE_FILES: $EXCLUDE_FILES${NC}"
 
-echo -e "${BLUE}USE_QUIET_MODE: $1${NC}"
-echo -e "${BLUE}USE_VERBOSE_MODE: $2${NC}"
-echo -e "${BLUE}FOLDER_PATH: $4${NC}"
-echo -e "${BLUE}MAX_DEPTH: $5${NC}"
-echo -e "${BLUE}CHECK_MODIFIED_FILES: $6${NC}"
-echo -e "${BLUE}FILE_EXTENSION: $8${NC}"
-echo -e "${BLUE}FILE_PATH: $9${NC}"
-
+# Helper function to handle directory paths
 handle_dirs () {
+   IFS=',' read -r -a DIRLIST <<< "$FOLDER_PATH"
 
-   IFS=', ' read -r -a DIRLIST <<< "$FOLDER_PATH"
-
-   for index in "${!DIRLIST[@]}"
-   do
+   for index in "${!DIRLIST[@]}"; do
       if [ ! -d "${DIRLIST[index]}" ]; then
          echo -e "${RED}ERROR [✖] Can't find the directory: ${YELLOW}${DIRLIST[index]}${NC}"
          exit 2
       fi
-      COMMAND_DIRS+=("${DIRLIST[index]}")
+      # Add directory paths to the array
+      FOLDERS+=("${DIRLIST[index]}")
    done
-   FOLDERS="${COMMAND_DIRS[*]}"
-
 }
 
+# Helper function to handle excluded directory paths
+handle_exclude_dirs () {
+   IFS=',' read -r -a EXCLUDE_DIRLIST <<< "$EXCLUDE_FOLDERS"
+
+   for index in "${!EXCLUDE_DIRLIST[@]}"; do
+      if [ ! -d "${EXCLUDE_DIRLIST[index]}" ]; then
+         echo -e "${RED}ERROR [✖] Can't find the directory: ${YELLOW}${EXCLUDE_DIRLIST[index]}${NC}"
+         exit 2
+      fi
+      # Add exclusion rules for directories to the array
+      EXCLUDE_DIRS+=("-not -path '${EXCLUDE_DIRLIST[index]}'")
+   done
+}
+
+# Helper function to handle file paths
 handle_files () {
+   IFS=',' read -r -a FILELIST <<< "$FILE_PATH"
 
-   IFS=', ' read -r -a FILELIST <<< "$FILE_PATH"
-
-   for index in "${!FILELIST[@]}"
-   do
+   for index in "${!FILELIST[@]}"; do
       if [ ! -f "${FILELIST[index]}" ]; then
          echo -e "${RED}ERROR [✖] Can't find the file: ${YELLOW}${FILELIST[index]}${NC}"
          exit 2
       fi
-      if [ "$index" == 0 ]; then
-         COMMAND_FILES+=("-wholename ${FILELIST[index]}")
-      else
-         COMMAND_FILES+=("-o -wholename ${FILELIST[index]}")
-      fi
+      # Add file paths to the array
+      COMMANDS+=("${FILELIST[index]}")
    done
-   FILES="${COMMAND_FILES[*]}"
+}
 
+# Helper function to handle excluded file paths
+handle_exclude_files () {
+   IFS=',' read -r -a EXCLUDE_FILELIST <<< "$EXCLUDE_FILES"
+
+   for index in "${!EXCLUDE_FILELIST[@]}"; do
+      if [ ! -f "${EXCLUDE_FILELIST[index]}" ]; then
+         echo -e "${RED}ERROR [✖] Can't find the file: ${YELLOW}${EXCLUDE_FILELIST[index]}${NC}"
+         exit 2
+      fi
+      # Add exclusion rules for files to the array
+      EXCLUDE_FILES+=("-not -name '${EXCLUDE_FILELIST[index]}'")
+   done
 }
 
 check_errors () {
-
    if [ -e error.txt ] ; then
       if grep -q "ERROR:" error.txt; then
          echo -e "${YELLOW}=========================> MARKDOWN LINK CHECK <=========================${NC}"
@@ -105,108 +126,74 @@ check_errors () {
    else
       echo -e "${GREEN}All good!${NC}"
    fi
-
 }
 
-add_options () {
-
-   if [ -f "$CONFIG_FILE" ]; then
-      FIND_CALL+=('--config' "${CONFIG_FILE}")
-   fi
-
-   if [ "$USE_QUIET_MODE" = "yes" ]; then
-      FIND_CALL+=('-q')
-   fi
-
-   if [ "$USE_VERBOSE_MODE" = "yes" ]; then
-      FIND_CALL+=('-v')
-   fi
-
-}
-
-check_additional_files () {
-
-   if [ -n "$FILES" ]; then
-      if [ "$MAX_DEPTH" -ne -1 ]; then
-         FIND_CALL=('find' ${FOLDERS} '-type' 'f' '(' ${FILES} ')' '-not' '-path' './node_modules/*' '-maxdepth' "${MAX_DEPTH}" '-exec' 'markdown-link-check' '{}')
-      else
-         FIND_CALL=('find' ${FOLDERS} '-type' 'f' '(' ${FILES} ')' '-not' '-path' './node_modules/*' '-exec' 'markdown-link-check' '{}')
-      fi
-
-      add_options
-
-      FIND_CALL+=(';')
-
-      set -x
-      "${FIND_CALL[@]}" &>> error.txt
-      set +x
-
-   fi
-
-}
-
-if [ -z "$8" ]; then
-   FOLDERS="."
-else
-   handle_dirs
+if [ -n "$CONFIG_FILE" ]; then
+   COMMANDS+=("--config" "$CONFIG_FILE")
 fi
 
-if [ -n "$9" ]; then
-   handle_files
+if [ "$USE_QUIET_MODE" = "yes" ]; then
+   COMMANDS+=("-q")
+fi
+
+if [ "$USE_VERBOSE_MODE" = "yes" ]; then
+   COMMANDS+=("-v")
+fi
+
+if [ -n "$EXCLUDE_FOLDERS" ]; then
+   handle_exclude_dirs
+fi
+
+if [ -n "$EXCLUDE_FILES" ]; then
+   handle_exclude_files
 fi
 
 if [ "$CHECK_MODIFIED_FILES" = "yes" ]; then
-
-   echo -e "${BLUE}BASE_BRANCH: $7${NC}"
+   echo -e "${BLUE}BASE_BRANCH: $BASE_BRANCH${NC}"
 
    git config --global --add safe.directory '*'
 
-   git fetch origin "${BASE_BRANCH}" --depth=1 > /dev/null
-   MASTER_HASH=$(git rev-parse origin/"${BASE_BRANCH}")
+   git fetch origin "$BASE_BRANCH" --depth=1 > /dev/null
+   MASTER_HASH=$(git rev-parse origin/"$BASE_BRANCH")
 
-   if [ -z "$FOLDERS" ]; then
-      FOLDERS="."
+   if [ -z "${FOLDERS[*]}" ]; then
+      FOLDERS=(".")
    fi
-
-   FIND_CALL=('markdown-link-check')
-
-   add_options
 
    FOLDER_ARRAY=(${FOLDER_PATH//,/ })
-   mapfile -t FILE_ARRAY < <( git diff --name-only --diff-filter=AM "$MASTER_HASH" -- "${FOLDER_ARRAY[@]}")
+   mapfile -t FILE_ARRAY < <(git diff --name-only --diff-filter=AM "$MASTER_HASH" -- "${FOLDER_ARRAY[@]}")
 
-   for i in "${FILE_ARRAY[@]}"
-      do
-         if [ "${i##*.}" == "${FILE_EXTENSION#.}" ]; then
-            FIND_CALL+=("${i}")
-            COMMAND="${FIND_CALL[*]}"
-            $COMMAND &>> error.txt || true
-            unset 'FIND_CALL[${#FIND_CALL[@]}-1]'
-         fi
-      done
-
-   check_additional_files
+   for i in "${FILE_ARRAY[@]}"; do
+      if [ "${i##*.}" == "${FILE_EXTENSION#.}" ]; then
+         COMMANDS+=("$i")
+         markdown-link-check "${COMMANDS[@]}" >> error.txt || true
+         unset 'COMMANDS[${#COMMANDS[@]}-1]'
+      fi
+   done
 
    check_errors
-
 else
-
-   if [ "$5" -ne -1 ]; then
-      FIND_CALL=('find' ${FOLDERS} '-name' '*'"${FILE_EXTENSION}" '-not' '-path' './node_modules/*' '-maxdepth' "${MAX_DEPTH}" '-exec' 'markdown-link-check' '{}')
+   if [ "$MAX_DEPTH" -eq -1 ]; then
+      MAX_DEPTH=""
    else
-      FIND_CALL=('find' ${FOLDERS} '-name' '*'"${FILE_EXTENSION}" '-not' '-path' './node_modules/*' '-exec' 'markdown-link-check' '{}')
+      MAX_DEPTH="-maxdepth $MAX_DEPTH"
    fi
 
-   add_options
+   if [ -n "$FOLDER_PATH" ]; then
+      handle_dirs
 
-   FIND_CALL+=(';')
+      # Find all files with the specified extension
+      mapfile -t FILES < <(find "${FOLDERS[@]}" $MAX_DEPTH -type f -name "*$FILE_EXTENSION" "${EXCLUDE_DIRS[@]}" "${EXCLUDE_FILES[@]}")
 
-   set -x
-   "${FIND_CALL[@]}" &>> error.txt
-   set +x
+      for i in "${FILES[@]}"; do
+         COMMANDS+=("$i")
+         markdown-link-check "${COMMANDS[@]}" >> error.txt || true
+         unset 'COMMANDS[${#COMMANDS[@]}-1]'
+      done
 
-   check_additional_files
-
-   check_errors
-
+      check_errors
+   else
+      echo -e "${RED}ERROR [✖] No folder path provided.${NC}"
+      exit 2
+   fi
 fi
