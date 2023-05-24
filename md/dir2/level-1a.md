@@ -6,7 +6,7 @@ www.google.com
 [This is a broken link](https://www.exampleexample.cox)
 
 [This is another broken link](http://ignored-domain.com) but its ignored using a
-configuration file. 
+configuration file.
 
 ### Alpha
 
@@ -23,3 +23,5 @@ But [missing files are reported](missing-example.js).
 [charlie]: #charlie
 
 External file: [Charlie](./file2.md/#charlie)
+
+Modified.
