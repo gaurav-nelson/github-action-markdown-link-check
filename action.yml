@@ -43,15 +43,18 @@ inputs:
     default: ''
 
 runs:
-  using: 'docker'
-  image: 'Dockerfile'
-  args:
-    - ${{ inputs.use-quiet-mode }}
-    - ${{ inputs.use-verbose-mode }}
-    - ${{ inputs.config-file }}
-    - ${{ inputs.folder-path }}
-    - ${{ inputs.max-depth }}
-    - ${{ inputs.check-modified-files-only }}
-    - ${{ inputs.base-branch }}
-    - ${{ inputs.file-extension }}
-    - ${{ inputs.file-path }}
+  using: 'composite'
+  steps:
+    - id: markdown-link-check
+      run: $GITHUB_ACTION_PATH/entrypoint.sh
+      shell: bash
+      env:
+        INPUT_USE_QUIET_MODE: ${{ inputs.use-quiet-mode }}
+        INPUT_USE_VERBOSE_MODE: ${{ inputs.use-verbose-mode }}
+        INPUT_CONFIG_FILE: ${{ inputs.config-file }}
+        INPUT_FOLDER_PATH: ${{ inputs.folder-path }}
+        INPUT_MAX_DEPTH: ${{ inputs.max-depth }}
+        INPUT_CHECK_MODIFIED_FILES_ONLY: ${{ inputs.check-modified-files-only }}
+        INPUT_BASE_BRANCH: ${{ inputs.base-branch }}
+        INPUT_FILE_EXTENSION: ${{ inputs.file-extension }}
+        INPUT_FILE_PATH: ${{ inputs.file-path }}
