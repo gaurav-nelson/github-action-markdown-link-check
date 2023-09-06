@@ -1,6 +1,6 @@
 # GitHub Action - Markdown link check 🔗✔️
 [![GitHub Marketplace](https://img.shields.io/badge/GitHub%20Marketplace-Markdown%20link%20check-brightgreen?style=for-the-badge)](https://github.com/marketplace/actions/markdown-link-check)
-[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/D1D07SSY7)
+<a href="https://liberapay.com/gaurav-nelson/donate"><img alt="Donate using Liberapay" src="https://liberapay.com/assets/widgets/donate.svg"></a>
 
 This GitHub action checks all Markdown files in your repository for broken links. (Uses [tcort/markdown-link-check](https://github.com/tcort/markdown-link-check))
 
@@ -34,7 +34,7 @@ Markdown link check.
 1. [pyroscope-io/pyroscope](https://github.com/pyroscope-io/pyroscope/blob/main/.github/workflows/lint-markdown.yml)
    ![](https://img.shields.io/github/stars/pyroscope-io/pyroscope?style=social)
 
-If you are using this on production, consider [buying me a coffee](https://ko-fi.com/gauravnelson) ☕.
+If you are using this on production, consider [buying me a coffee](https://liberapay.com/gaurav-nelson/) ☕.
 
 ## Configuration
 
@@ -256,10 +256,7 @@ GitHub Action - Markdown link check follows the [GitHub recommended versioning s
 
 <hr>
 <p align="center">
- <a name="coffee" href="https://ko-fi.com/gauravnelson">
+ <a name="coffee" href="https://liberapay.com/gaurav-nelson/">
   <img src="https://i.imgur.com/1Q1YoHz.gif" alt="Buy me a coffee.">
  </a>
 </p>
-
-
-See https://pubsadasdsadasdasdasdas.aasasdas.odasdarg/onlinepubs/9699919799/utilities/crontab.html#tag_20_25_07
