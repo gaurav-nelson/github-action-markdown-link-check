@@ -1,3 +1,16 @@
+<table>
+  <tr>
+    <td>
+      <h3> 🚨 Update (November 2023) </h3>
+        <p>This action uses <code>markdown-link-check</code> to find broken links. However, it has some limitations and issues that affect the accuracy, performance of the checking process, and the output. It also makes it hard to add new features.</p>
+        <p>I am working on a new tool similar to this action but one that reduces false positives and includes the most requested features.</p>
+        <p>I am currently working on developing and testing <a href="https://github.com/UmbrellaDocs/linkspector">Linkspector</a>, and I hope to release it soon. In the meantime, I'll support this action in maintenance-only mode as I want to focus more on <a href="https://github.com/UmbrellaDocs/linkspector">Linkspector</a>. I appreciate your understanding and patience.</p>
+        <p>If you're interested in <a href="https://github.com/UmbrellaDocs/linkspector">Linkspector</a>, follow its progress on its GitHub repository. Thank you for using this action, and I hope you will enjoy <a href="https://github.com/UmbrellaDocs/linkspector">Linkspector</a> when it is ready.</p>
+    </td>
+  </tr>
+</table>
+
+
 # GitHub Action - Markdown link check 🔗✔️
 [![GitHub Marketplace](https://img.shields.io/badge/GitHub%20Marketplace-Markdown%20link%20check-brightgreen?style=for-the-badge)](https://github.com/marketplace/actions/markdown-link-check)
 <a href="https://liberapay.com/gaurav-nelson/donate"><img alt="Donate using Liberapay" src="https://liberapay.com/assets/widgets/donate.svg"></a>
