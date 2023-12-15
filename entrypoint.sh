@@ -141,7 +141,7 @@ read_issue_body() {
 
 # Create a function to check and create an issue
 check_and_create_issue() {
-    if [ "$CREATE_ISSUE" = "true" ]; then
+    if [ "$CREATE_ISSUE" = "yes" ]; then
         if [ -e error.txt ]; then
             if grep -q "ERROR:" error.txt; then
                 echo -e "${YELLOW}=========================> MARKDOWN LINK CHECK <=========================${NC}"
@@ -163,13 +163,6 @@ check_and_create_issue() {
 
                 printf "\n"
                 echo -e "${RED}[✖] Dead links found! An issue has been created.${NC}"
-                printf "\n"
-                echo -e "${YELLOW}=========================================================================${NC}"
-                exit 113
-            else
-                echo -e "${YELLOW}=========================> MARKDOWN LINK CHECK <=========================${NC}"
-                printf "\n"
-                echo -e "${GREEN}[✔] All links are good!${NC}"
                 printf "\n"
                 echo -e "${YELLOW}=========================================================================${NC}"
             fi

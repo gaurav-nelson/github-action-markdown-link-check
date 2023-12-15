@@ -44,7 +44,7 @@ inputs:
   create-issue:
     description: 'Create issue with broken links'
     required: true
-    default: false
+    default: 'no'
 runs:
   using: 'docker'
   image: 'Dockerfile'
