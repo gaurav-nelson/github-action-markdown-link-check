@@ -73,6 +73,7 @@ You customize the action by using the following variables:
 |`base-branch`|Use this variable to specify the branch to compare when finding modified markdown files. |`master`|
 |`file-extension`|By default the `github-action-markdown-link-check` action checks files in your repository with the `.md` extension. Use this option to specify a different file extension such as `.markdown` or `.mdx`.|`.md`|
 |`file-path` | Specify additional files (with complete path and extension) you want to check. Use comma separated values for checking multiple files. See [Check multiple directories and files](#check-multiple-directories-and-files) section for usage.| - |
+|`create-issue` | Enable this option to automatically create a new issue with details about the error links. When enabled, this action will generate a new issue in the repository, listing the Markdown files and the links that need attention. See [Check issue auto-creation](#issue-auto-creation) section for usage.| - |
 
 #### Sample workflow with variables
 
@@ -93,6 +94,7 @@ jobs:
         config-file: 'mlc_config.json'
         folder-path: 'docs/markdown_files'
         max-depth: 2
+        create-issue: true
 ```
 
 ### Scheduled runs
@@ -250,6 +252,7 @@ On running the workflow described above, the output shown below is obtained
 
 ![image](https://user-images.githubusercontent.com/53875297/159135426-9f439d39-8bb3-40f0-9255-9efe2b493c1a.png)
 
+## Issue auto-creation
 
 ## Versioning
 GitHub Action - Markdown link check follows the [GitHub recommended versioning strategy](https://github.com/actions/toolkit/blob/master/docs/action-versioning.md).
