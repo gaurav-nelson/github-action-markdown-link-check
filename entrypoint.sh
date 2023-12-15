@@ -31,7 +31,7 @@ CREATE_ISSUE="${10:-false}"
 DEFAULT_ISSUE_TITLE="🔥 Dead {n} Links Found in Markdown Files"
 
 if [ -f "$CONFIG_FILE" ]; then
-   ISSUE_TITLE=$(jq -r '.issue_title' mcl_config.json)
+   ISSUE_TITLE=$(jq -r '.issue_title' "$CONFIG_FILE")
    echo -e "${BLUE}Using markdown-link-check configuration file: ${YELLOW}$CONFIG_FILE${NC}"
 else
    ISSUE_TITLE="$DEFAULT_ISSUE_TITLE"
