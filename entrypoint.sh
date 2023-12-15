@@ -16,7 +16,7 @@ echo "::endgroup::"
 
 declare -a FIND_CALL
 declare -a COMMAND_DIRS COMMAND_FILES
-declare -a COMMAND_FILES
+declare -a COMMAND_FILES=()
 
 USE_QUIET_MODE="$1"
 USE_VERBOSE_MODE="$2"
