@@ -9,6 +9,7 @@ jobs:
       uses: ./
       with:
         check-modified-files-only: 'yes'
+        create-issue: 'yes'
   markdown-link-check-folders:
     runs-on: ubuntu-latest
     steps:

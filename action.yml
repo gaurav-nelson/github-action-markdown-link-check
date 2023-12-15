@@ -41,7 +41,10 @@ inputs:
     description: 'Specify additional files you want to check'
     required: true
     default: ''
-
+  create-issue:
+    description: 'Create issue with broken links'
+    required: true
+    default: 'no'
 runs:
   using: 'docker'
   image: 'Dockerfile'
@@ -55,3 +58,4 @@ runs:
     - ${{ inputs.base-branch }}
     - ${{ inputs.file-extension }}
     - ${{ inputs.file-path }}
+    - ${{ inputs.create-issue }}
