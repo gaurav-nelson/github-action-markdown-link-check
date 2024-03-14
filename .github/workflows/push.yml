@@ -9,6 +9,11 @@ jobs:
       uses: ./
       with:
         check-modified-files-only: 'yes'
+      id: markdown-link-check
+    - name: display errors
+      run: |
+          echo "${{ steps.markdown-link-check.outputs.MLC_OUTPUT }}"
+
   markdown-link-check-folders:
     runs-on: ubuntu-latest
     steps:

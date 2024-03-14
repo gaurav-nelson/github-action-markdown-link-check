@@ -24,6 +24,7 @@ FOLDER_PATH="$4"
 MAX_DEPTH="$5"
 CHECK_MODIFIED_FILES="$6"
 BASE_BRANCH="$7"
+
 if [ -z "$8" ]; then
    FILE_EXTENSION=".md"
 else
@@ -94,6 +95,9 @@ check_errors () {
          cat error.txt
          printf "\n"
          echo -e "${YELLOW}=========================================================================${NC}"
+         echo "MLC_OUTPUT<<EOF" >> "$GITHUB_ENV"
+         cat error.txt >> "$GITHUB_ENV"
+         echo "EOF" >> "$GITHUB_ENV"
          exit 113
       else
          echo -e "${YELLOW}=========================> MARKDOWN LINK CHECK <=========================${NC}"
@@ -101,9 +105,11 @@ check_errors () {
          echo -e "${GREEN}[✔] All links are good!${NC}"
          printf "\n"
          echo -e "${YELLOW}=========================================================================${NC}"
+         echo "MLC_OUTPUT=[✔] All links are good!" >> "$GITHUB_OUTPUT"
       fi
    else
       echo -e "${GREEN}All good!${NC}"
+      echo "MLC_OUTPUT=All good!" >> "$GITHUB_OUTPUT"
    fi
 
 }
