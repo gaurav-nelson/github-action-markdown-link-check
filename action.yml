@@ -2,11 +2,11 @@ name: 'markdown-link-check'
 description: 'Check if all links are valid in markdown files.'
 author: 'Gaurav Nelson'
 branding:
-  icon: 'link'  
+  icon: 'link'
   color: 'green'
 inputs:
   use-quiet-mode:
-    description: 'Use yes to enable markdown-link-check quiet mode which only list errors.'
+    description: 'Use yes to enable markdown-link-check quiet mode which only lists errors.'
     required: true
     default: 'no'
   use-verbose-mode:
@@ -14,11 +14,11 @@ inputs:
     required: true
     default: 'no'
   config-file:
-    description: 'Specify path to a markdown-link-check JSON configuration file.'
+    description: 'Specify the path to a markdown-link-check JSON configuration file.'
     required: true
     default: 'mlc_config.json'
   folder-path:
-    description: 'Specify path to a custom folder where your markdown files are located.'
+    description: 'Specify the path to a custom folder where your markdown files are located.'
     required: true
     default: '.'
   max-depth:
@@ -30,7 +30,7 @@ inputs:
     required: true
     default: 'no'
   base-branch:
-    description: 'Use this to specify the base branch against which the action finds the modififed files.'
+    description: 'Use this to specify the base branch against which the action finds the modified files.'
     required: true
     default: 'master'
   file-extension:
@@ -38,8 +38,16 @@ inputs:
     required: true
     default: '.md'
   file-path:
-    description: 'Specify additional files you want to check'
+    description: 'Specify additional files you want to check.'
     required: true
+    default: ''
+  exclude-folder-path:
+    description: 'Specify the path to exclude folders from the search.'
+    required: false
+    default: ''
+  exclude-file:
+    description: 'Specify additional files to exclude from the check.'
+    required: false
     default: ''
 
 runs:
@@ -55,3 +63,5 @@ runs:
     - ${{ inputs.base-branch }}
     - ${{ inputs.file-extension }}
     - ${{ inputs.file-path }}
+    - ${{ inputs.exclude-folder-path }}
+    - ${{ inputs.exclude-file }}
