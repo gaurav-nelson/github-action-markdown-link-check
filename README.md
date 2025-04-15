@@ -1,13 +1,28 @@
 <table>
   <tr>
     <td>
-      <h3> 🚨 Update (May 2024) </h3>
-         <p>I have developed a new tool called <a href="https://github.com/UmbrellaDocs/linkspector">Linkspector</a>, which offers improved functionality and reduced false positives. I recommend using Linkspector for your needs, which is now the preferred and supported option.</p>
-         <h1>Try <a href="https://github.com/UmbrellaDocs/action-linkspector">GitHub action Linkspector</a>!</h1>
+      <h1> ⛔️ Deprecation notice (Apr 2025) </h1>
+      <p>
+        This repository is now ⛔️ <strong>deprecated</strong> and is no longer actively maintained.
+      </p>
+      <p>
+        For support and further development, please use the maintained fork available at
+        <a href="https://github.com/tcort/github-action-markdown-link-check">Tcort GitHub Action Markdown Link Check</a>.
+      </p>
+      <hr />
+      <p>
+        I have also developed a new tool called
+        <a href="https://github.com/UmbrellaDocs/linkspector">Linkspector</a>,
+        which offers improved functionality and reduced false positives.
+        You can try this tool as an alternative if it fits your needs.
+      </p>
+      <p>
+        Try <a href="https://github.com/UmbrellaDocs/action-linkspector">GitHub Action Linkspector</a>!
+      </p>
+      <hr />
     </td>
   </tr>
 </table>
-
 
 ### GitHub Action - Markdown link check 🔗✔️
 [![GitHub Marketplace](https://img.shields.io/badge/GitHub%20Marketplace-Markdown%20link%20check-brightgreen?style=for-the-badge)](https://github.com/marketplace/actions/markdown-link-check)
