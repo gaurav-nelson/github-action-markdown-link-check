@@ -1,4 +1,4 @@
-name: 'markdown-link-check'
+name: 'markdown-link-check-action'
 description: 'Check if all links are valid in markdown files.'
 author: 'Maintainers of tcort/markdown-link-check'
 branding:
