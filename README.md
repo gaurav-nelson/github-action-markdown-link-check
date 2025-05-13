@@ -19,7 +19,7 @@ This GitHub action checks all Markdown files in your repository for broken links
        runs-on: ubuntu-latest
        steps:
        - uses: actions/checkout@v4
-       - uses: tcort/github-action-markdown-link-check@v1.1.0
+       - uses: tcort/github-action-markdown-link-check@v1
    ```
 
 ### Real-life usage samples
@@ -72,7 +72,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
-    - uses: tcort/github-action-markdown-link-check@v1.1.0
+    - uses: tcort/github-action-markdown-link-check@v1
       with:
         use-quiet-mode: 'yes'
         use-verbose-mode: 'yes'
@@ -105,7 +105,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
-    - uses: tcort/github-action-markdown-link-check@v1.1.0
+    - uses: tcort/github-action-markdown-link-check@v1
       with:
         use-quiet-mode: 'yes'
         use-verbose-mode: 'yes'
@@ -153,7 +153,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
-    - uses: tcort/github-action-markdown-link-check@v1.1.0
+    - uses: tcort/github-action-markdown-link-check@v1
       with:
         use-quiet-mode: 'yes'
         use-verbose-mode: 'yes'
@@ -171,7 +171,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
-    - uses: tcort/github-action-markdown-link-check@v1.1.0
+    - uses: tcort/github-action-markdown-link-check@v1
       with:
         use-quiet-mode: 'yes'
         folder-path: 'md/dir1, md/dir2'
@@ -224,7 +224,7 @@ jobs:
 
     # Checks the status of hyperlinks in .md files in verbose mode
     - name: Check links
-      uses: tcort/github-action-markdown-link-check@v1.1.0
+      uses: tcort/github-action-markdown-link-check@v1
       with:
         use-verbose-mode: 'yes'
 ```
@@ -246,7 +246,7 @@ GitHub Action - Markdown link check follows the [GitHub recommended versioning s
    ```
 1. To use a major version of the action:
    ```yml
-   - uses: tcort/github-action-markdown-link-check@v1.1.0
+   - uses: tcort/github-action-markdown-link-check@v1
    ```
 1. You can also specify a [specific commit SHA](https://github.com/tcort/github-action-markdown-link-check/commits/master) as an action version:
    ```yml
