@@ -1,7 +1,7 @@
 ### GitHub Action - Markdown link check 🔗✔️
 [![GitHub Marketplace](https://img.shields.io/badge/GitHub%20Marketplace-Markdown%20link%20check-brightgreen?style=for-the-badge)](https://github.com/marketplace/actions/markdown-link-check-action)
 
-Forked from [gaurav-nelson/github-action-markdown-link-check](https://github.com/gaurav-nelson/github-action-markdown-link-check), which is no longer maintained.
+> Forked from [gaurav-nelson/github-action-markdown-link-check](https://github.com/gaurav-nelson/github-action-markdown-link-check), which is no longer maintained.
 
 This GitHub action checks all Markdown files in your repository for broken links. (Uses [tcort/markdown-link-check](https://github.com/tcort/markdown-link-check))
 
@@ -18,8 +18,8 @@ This GitHub action checks all Markdown files in your repository for broken links
      markdown-link-check:
        runs-on: ubuntu-latest
        steps:
-       - uses: actions/checkout@master
-       - uses: tcort/github-action-markdown-link-check@v1
+       - uses: actions/checkout@v4
+       - uses: tcort/github-action-markdown-link-check@v1.1.0
    ```
 
 ### Real-life usage samples
@@ -71,8 +71,8 @@ jobs:
   markdown-link-check:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@master
-    - uses: tcort/github-action-markdown-link-check@v1
+    - uses: actions/checkout@v4
+    - uses: tcort/github-action-markdown-link-check@v1.1.0
       with:
         use-quiet-mode: 'yes'
         use-verbose-mode: 'yes'
@@ -104,8 +104,8 @@ jobs:
   markdown-link-check:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@master
-    - uses: tcort/github-action-markdown-link-check@v1
+    - uses: actions/checkout@v4
+    - uses: tcort/github-action-markdown-link-check@v1.1.0
       with:
         use-quiet-mode: 'yes'
         use-verbose-mode: 'yes'
@@ -152,8 +152,8 @@ jobs:
   markdown-link-check:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@master
-    - uses: tcort/github-action-markdown-link-check@v1
+    - uses: actions/checkout@v4
+    - uses: tcort/github-action-markdown-link-check@v1.1.0
       with:
         use-quiet-mode: 'yes'
         use-verbose-mode: 'yes'
@@ -170,8 +170,8 @@ jobs:
   markdown-link-check:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@master
-    - uses: tcort/github-action-markdown-link-check@v1
+    - uses: actions/checkout@v4
+    - uses: tcort/github-action-markdown-link-check@v1.1.0
       with:
         use-quiet-mode: 'yes'
         folder-path: 'md/dir1, md/dir2'
@@ -220,11 +220,11 @@ jobs:
     runs-on: ubuntu-latest
     # check out the latest version of the code
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
     # Checks the status of hyperlinks in .md files in verbose mode
     - name: Check links
-      uses: tcort/github-action-markdown-link-check@v1
+      uses: tcort/github-action-markdown-link-check@v1.1.0
       with:
         use-verbose-mode: 'yes'
 ```
@@ -242,11 +242,11 @@ GitHub Action - Markdown link check follows the [GitHub recommended versioning s
 
 1. To use a specific released version of the action ([Releases](https://github.com/tcort/github-action-markdown-link-check/releases)):
    ```yml
-   - uses: tcort/github-action-markdown-link-check@1
+   - uses: tcort/github-action-markdown-link-check@1.1.0
    ```
 1. To use a major version of the action:
    ```yml
-   - uses: tcort/github-action-markdown-link-check@v1
+   - uses: tcort/github-action-markdown-link-check@v1.1.0
    ```
 1. You can also specify a [specific commit SHA](https://github.com/tcort/github-action-markdown-link-check/commits/master) as an action version:
    ```yml
